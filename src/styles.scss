@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 5px;
+  @media (min-width: 560px) {
+    padding: 15px;
+  }
+}
+
+.button-success,
+.button-danger,
+.button-warning,
+.button-secondary {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success {
+    background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-danger {
+    background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-warning {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+/*  Allows inputs and such to be nested in div elements*/
+.pure-form .pure-group > div.nestForInput input,
+.pure-form .pure-group > div.nestForInput textarea {
+    display: block;
+    padding: 10px;
+    margin: 0 0 -1px;
+    border-radius: 0;
+    position: relative;
+    top: -1px;
+}
+.pure-form .pure-group > div.nestForInput:first-of-type input,
+.pure-form .pure-group > div.nestForInput:first-of-type textarea {
+    top: 1px;
+    border-radius: 4px 4px 0 0;
+    margin: 0;
+}
+.pure-form .pure-group > div.nestForInput:first-of-type:last-of-type input,
+.pure-form .pure-group > div.nestForInput:first-of-type:last-of-type textarea {
+    top: 1px;
+    border-radius: 4px;
+    margin: 0;
+}
+.pure-form .pure-group > div.nestForInput:last-of-type input,
+.pure-form .pure-group > div.nestForInput:last-of-type textarea {
+    top: -2px;
+    border-radius: 0 0 4px 4px;
+    margin: 0;
+}

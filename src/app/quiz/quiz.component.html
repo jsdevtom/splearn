@@ -1,0 +1,21 @@
+<div *ngIf="!isFinished">
+  <div>Question {{ questionIndex + 1 }} of {{ numOfQuestionsInQuiz }}</div>
+  <div *ngIf="questionIndex > 0">Percentage correct so far: {{ ((correctAnswerCount / questionIndex) * 100).toFixed() }}%</div>
+  
+  <form class="pure-form" [formGroup]="QAForm" (ngSubmit)="onSubmitAnswer($event)">
+    <fieldset>
+      <legend>{{ currentQuestion }}</legend>
+  
+      <input type="text" name="answer" formControlName="answer" autocomplete="off">
+      <button type="submit" class="pure-button pure-button-primary">Submit</button>
+    </fieldset>
+  </form>
+</div>
+
+<div *ngIf="isFinished">
+  <div>
+    <h1>You scored {{correctAnswerCount}} out of {{questionIndex}} ({{ ((correctAnswerCount / questionIndex) * 100).toFixed() }}%)</h1>
+  </div>
+  <button (click)="resetQuiz()" type="button" class="pure-button pure-button-primary">Quiz me again!</button>
+  
+</div>

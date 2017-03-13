@@ -1,0 +1,84 @@
+@import '../variables';
+
+//dimensions
+$em-logo: 1.4em;
+
+ul.topnav {
+  list-style-type: none;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: $color_mine_shaft_approx;
+  li {
+    display: none;
+    &.currentPage, .menuToggle {
+      display: flex;
+    }
+
+    &.currentPage {
+      margin-right: auto;
+
+      a {
+        font-size: $em-logo;
+      }
+    }
+
+    a {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      color: $concrete;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 17px;
+
+      &:hover {
+        background-color: $color_fuscous_gray_approx;
+      }
+    }
+
+    &.menuToggle {
+      display: flex;
+      a {
+        font-size: $em-logo;
+      }
+    }
+  }
+  &.responsive {
+    flex-direction: column;
+
+    li {
+      display: flex;
+
+      &.menuToggle {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      a {
+        text-align: left;
+        &:not(.currentPage):not(.menuToggle) {
+          flex-grow: 1;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(min-width:680px) {
+  ul.topnav {
+    li {
+      display: flex;
+
+      &.menuToggle {
+        display: none;
+      }
+    }
+  }
+}

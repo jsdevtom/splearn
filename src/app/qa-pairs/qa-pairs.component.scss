@@ -1,0 +1,21 @@
+:host {
+  > * {
+    margin-bottom: 15px;
+  }
+}
+
+.qapair {
+  border: 1px #ccc solid;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  > *:not(button) {
+    display: block;
+    width: 100%;
+  }
+  button {
+    margin-right: 10px;
+  }
+}

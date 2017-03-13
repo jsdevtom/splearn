@@ -1,0 +1,12 @@
+<ul class="topnav" id="myTopnav" #myTopnav>
+  <li class="currentPage" onclick="myTopnav.classList
+  .remove('responsive')"><a [routerLink]="[ '/' ]">BrainBox</a></li>
+  <li onclick="myTopnav.classList
+  .remove('responsive')"><a [routerLink]="[ '/qapairs' ]">Questions</a></li>
+  <li onclick="myTopnav.classList
+  .remove('responsive')"><a [routerLink]="[ '/revise' ]">Revise</a></li>
+  <li class="menuToggle" onclick="myTopnav.classList
+  .toggle('responsive')">
+    <a href="javascript:void(0);">&#9776;</a>
+  </li>
+</ul>
