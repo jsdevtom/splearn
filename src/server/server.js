@@ -63,6 +63,14 @@ db.once('open', function () {
         const wrongAnswers = obj.wrongAnswers
         for (let i = 0; i < correctAnswers.length; i++) {
           let correctAnswer = correctAnswers[i]
+
+          //  If the submitted answer is the same as the correctAnswer but also not in the wrong answer array
+          //  then send back isTrue. Example:
+          //    Question: Affect or Effect?
+          //    Answers:  How does the budget ______ people?
+          //
+          //    levenshtein('effect', 'affect') / 'effect'.length would return 0.167 here which would pass
+          //    thus !wrongAnswers.includes('affect') is needed to overcome this.
           if ((levenshtein(correctAnswer, req.body.answer) / correctAnswer.length) <= 0.25 &&
           !wrongAnswers.includes(req.body.answer)) {
             return res.status(200).json({isTrue: true})
