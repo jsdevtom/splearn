@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"mongod\" \"ng build -w\" \"nodemon src/server/server.js\"",
+    "debug": "concurrently \"mongod\" \"ng build -w\" \"devtool src/server/server.js\"",
     "prod": "concurrently \"mongod\" \"ng build -prod\" \"node src/server/server.js\"",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "test": "ng test",
