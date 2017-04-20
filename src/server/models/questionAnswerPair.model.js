@@ -4,7 +4,11 @@ var questionAnswerPairSchema = mongoose.Schema({
   question: String,
   correctAnswers: [String],
   wrongAnswers: [String],
-  createdAt: Date
+  createdAt: Date,
+  attempts: [{
+    date: Date,
+    correct: Boolean
+  }]
 })
 
 var QuestionAnswerPair = mongoose.model('QuestionAnswerPair', questionAnswerPairSchema)
