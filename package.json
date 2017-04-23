@@ -10,6 +10,7 @@
     "prod": "concurrently \"mongod\" \"ng build -prod\" \"node src/server/server.js\"",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "test": "ng test",
+    "test:server": "mocha",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor"
   },
@@ -47,10 +48,16 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
+    "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
     "typescript": "~2.0.3"
+  },
+  "standard": {
+    "ignore": [
+      "/node_modules"
+    ]
   }
 }

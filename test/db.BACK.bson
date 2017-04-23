@@ -1,0 +1,331 @@
+/* 1 */
+{
+    "_id" : ObjectId("58c048ab964c2f691113782b"),
+    "question" : "What does 'merci' mean in French?",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "Thank you"
+    ],
+    "correctAnswers" : [ 
+        "Please"
+    ],
+    "__v" : 5
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("58c3f3d4cb4a8238e061bf15"),
+    "question" : "The potential pitfall with using typeof bar === \"object\" to determine if bar is an object is that ___ is also considered to be of type object",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "null", 
+        "array"
+    ],
+    "__v" : 0
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("58c3f563cb4a8238e061bf16"),
+    "question" : "What will the code below print out?:\n\n\"use strict\";\nvar a = 1\nvar b = {}\nfunction foo(x) {\n  x = 2\n}\n \nfoo(a)\nconsole.log(a);",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "1"
+    ],
+    "__v" : 0
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("58c3f639cb4a8238e061bf17"),
+    "question" : "What will the below code print out?:\n\n\"use strict\";\nvar aVar = 3\nVar = 1\nconsole.log(Var)",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "1", 
+        "3"
+    ],
+    "correctAnswers" : [ 
+        "Uncaught ReferenceError"
+    ],
+    "__v" : 0
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("58c3f7cccb4a8238e061bf18"),
+    "question" : "What does the following code print out?:\n\nconsole.log(undefined == null)",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "false"
+    ],
+    "correctAnswers" : [ 
+        "true"
+    ],
+    "__v" : 0
+}
+
+/* 6 */
+{
+    "_id" : ObjectId("58c3f801cb4a8238e061bf19"),
+    "question" : "What does the below code print out?\n\nconsole.log(typeof(null))",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "object"
+    ],
+    "__v" : 0
+}
+
+/* 7 */
+{
+    "_id" : ObjectId("58c3f820cb4a8238e061bf1a"),
+    "question" : "What does the below code print out?\n\nconsole.log(undefined === null)",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "false"
+    ],
+    "__v" : 0
+}
+
+/* 8 */
+{
+    "_id" : ObjectId("58c3f875cb4a8238e061bf1b"),
+    "question" : "What does the below code print out? console.log(NaN == '1')",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "true"
+    ],
+    "correctAnswers" : [ 
+        "false"
+    ],
+    "__v" : 0
+}
+
+/* 9 */
+{
+    "_id" : ObjectId("58c406f8cb4a8238e061bf1c"),
+    "question" : "What will the below code print out?\n\n\"use strict\";\n\nvar name = 'igloo'\n\nvar code = \"var name = 'asim';\"\n\neval(code)\n\nconsole.log(name)",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "asim"
+    ],
+    "correctAnswers" : [ 
+        "igloo"
+    ],
+    "__v" : 0
+}
+
+/* 10 */
+{
+    "_id" : ObjectId("58c4074fcb4a8238e061bf1d"),
+    "question" : "What will this code print?\n\n(function(){\n\nvar a = 3\n\n})();\n\nconsole.log(typeof a !== 'undefined')",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "true", 
+        "undefined"
+    ],
+    "correctAnswers" : [ 
+        "false"
+    ],
+    "__v" : 0
+}
+
+/* 11 */
+{
+    "_id" : ObjectId("58c407b5cb4a8238e061bf1e"),
+    "question" : "What will this code print?\n\nconsole.log(moo)\n\nvar moo = function() {\n  console.log(\"loo\")\n}",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "loo", 
+        "moo"
+    ],
+    "correctAnswers" : [ 
+        "undefined"
+    ],
+    "__v" : 0
+}
+
+/* 12 */
+{
+    "_id" : ObjectId("58c40deecb4a8238e061bf1f"),
+    "question" : "What gets logged to the console when the user clicks on “Button 4”?\n\nfor (var i = 0; i < 5; i++) {\n  var btn = document.createElement('button')\n  btn.appendChild(document.createTextNode('Button ' + i))\n  btn.addEventListener('click', function(){ console.log(i)})\n  document.body.appendChild(btn)\n}",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "0", 
+        "1", 
+        "4"
+    ],
+    "correctAnswers" : [ 
+        "5"
+    ],
+    "__v" : 0
+}
+
+/* 13 */
+{
+    "_id" : ObjectId("58c40e63cb4a8238e061bf20"),
+    "question" : "In 1885, who extrapolated the hypothesis of the exponential nature of forgetting?",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "Hermann Ebbinghaus"
+    ],
+    "__v" : 0
+}
+
+/* 14 */
+{
+    "_id" : ObjectId("58c4254c25ddf96491b76770"),
+    "question" : "Consider the code snippet below. What will the console output be?\n\n(function(x) {\n\n    return (function(y) {\n        console.log(x)\n    })(2)\n\n})(1);",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "2"
+    ],
+    "correctAnswers" : [ 
+        "1"
+    ],
+    "__v" : 0
+}
+
+/* 15 */
+{
+    "_id" : ObjectId("58c5592f5b0d5216fbdc8717"),
+    "question" : "What will be the output of FIRST console.log in the code below?\n\nvar salary = \"1000$\"\n\n(function () {\n    console.log(salary)\n    var salary = \"5000$\"\n    console.log(salary)\n})()",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "Uncaught ReferenceError", 
+        "5000$", 
+        "1000$"
+    ],
+    "correctAnswers" : [ 
+        "undefined"
+    ],
+    "__v" : 0
+}
+
+/* 16 */
+{
+    "_id" : ObjectId("58c56d7a5b0d5216fbdc8718"),
+    "question" : "What does the below code print out in Node.js?\n\nconsole.log(this)",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "window", 
+        "error", 
+        "undefined"
+    ],
+    "correctAnswers" : [ 
+        "global object", 
+        "global"
+    ],
+    "__v" : 0
+}
+
+/* 17 */
+{
+    "_id" : ObjectId("58c56f785b0d5216fbdc871c"),
+    "question" : "What does the below code print out?\n\n'use strict'\n\nfunction sayHello () {\n  console.log(this)\n}\nsayHello()",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "undefined"
+    ],
+    "__v" : 0
+}
+
+/* 18 */
+{
+    "_id" : ObjectId("58c56dd25b0d5216fbdc8719"),
+    "question" : "What does the below code print out?\n\n'use strict';\n\n(function (){\n  console.log(this)\n})()",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "Uncaught ReferenceError", 
+        "global"
+    ],
+    "correctAnswers" : [ 
+        "undefined"
+    ],
+    "__v" : 0
+}
+
+/* 19 */
+{
+    "_id" : ObjectId("58c56e355b0d5216fbdc871a"),
+    "question" : "What does the below code print out?\n'use strict';\n\nvar animal = {\n  kind: 'Cow',\n  which: function () {\n    console.log(this.kind)\n  }\n}\nanimal.which()",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "undefined", 
+        "global"
+    ],
+    "correctAnswers" : [ 
+        "Cow"
+    ],
+    "__v" : 0
+}
+
+/* 20 */
+{
+    "_id" : ObjectId("58c56f045b0d5216fbdc871b"),
+    "question" : "What does the below code print out?\n\n'use strict'\n\nvar animal = {\n  kind: 'Cow',\n  which: function () {\n    console.log(this.kind)\n  }\n}\nvar animalFunc = animal.which\nanimalFunc()",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "undefined", 
+        "Cow"
+    ],
+    "correctAnswers" : [ 
+        "Uncaught TypeError"
+    ],
+    "__v" : 0
+}
+
+/* 21 */
+{
+    "_id" : ObjectId("58c56fce5b0d5216fbdc871d"),
+    "question" : "What does the code below print out?\n\n'use strict'\n\nfunction sayHello () {\n  console.log(this)\n}\nsayHello.call('john')\n",
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [ 
+        "bob", 
+        "bobbings"
+    ],
+    "correctAnswers" : [ 
+        "john"
+    ],
+    "__v" : 2,
+    "toBeAssessedNext" : ISODate("2017-03-12T15:57:07.898Z")
+}
+
+/* 22 */
+{
+    "_id" : ObjectId("58f9cae2b44a2a2ebe6c330e"),
+    "question" : "Mongoose Test",
+    "lastAssessed" : ISODate("2017-04-21T09:03:06.900Z"),
+    "timesAssessed" : 0,
+    "wrongAttempts" : 0,
+    "correctAttempts" : 0,
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "update"
+    ],
+    "__v" : 1,
+    "toBeAssessedNext" : ISODate("2017-04-21T09:03:11.900Z")
+}
+
+/* 23 */
+{
+    "_id" : ObjectId("58f9d602d2d48b35c32d430d"),
+    "toBeAssessedNext" : ISODate("2017-04-21T09:47:45.204Z"),
+    "question" : "Test mongoose 2",
+    "lastAssessed" : ISODate("2017-04-21T09:47:40.204Z"),
+    "timesAssessed" : 0,
+    "wrongAttempts" : 0,
+    "correctAttempts" : 0,
+    "createdAt" : ISODate("2017-04-21T10:40:04.696Z"),
+    "wrongAnswers" : [],
+    "correctAnswers" : [ 
+        "wutings2"
+    ],
+    "__v" : 3
+}
