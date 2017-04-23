@@ -1,5 +1,9 @@
 <button class="pure-button pure-button-primary" (click)="onNewQAPair($event)">Add Question</button>
 
+<div>
+  Questions to be reviewed: {{qapairsToBeAssessed.length}}
+</div>
+
 <div *ngFor="let qapair of qapairs" class="qapair">
   <h3>Question: {{qapair.question}}</h3>
   <h4>Correct answers:</h4>
