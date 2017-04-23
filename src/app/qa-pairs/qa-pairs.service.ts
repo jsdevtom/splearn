@@ -5,13 +5,18 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class QaPairsService {
-  public qapairs =[]
+  public qapairs = []
+  public qapairsToBeAssessed = []
   private headers = new Headers({'Content-Type': 'application/json'});
   private qapairsUrl = 'api/qapairs'
   private qapairsChanged = new EventEmitter()
 
   constructor(private http: Http) { }
-
+  
+  /**
+   * Get QA Pairs from the server. 
+   * Also initiates this.qapairs and this.qapairsToBeAssessed
+   */
   getQAPairs () {
     return this.http.get(this.qapairsUrl)
       .map(response => {
@@ -24,6 +29,20 @@ export class QaPairsService {
     // n is 0 based
     return this.http.get(`${this.qapairsUrl}/question/${n}`)
       .map(response => response.json())
+  }
+
+  /* Made obselete by using the helper filterToBeAssessed in the helpers.ts file */
+  getQAPairstoBeAssessed () {
+    return this.getQAPairs()
+      .map(response => {
+        let qapairsToBeAssessed = this.qapairs.filter((qapair) => {
+          return new Date(qapair.toBeAssessedNext).getTime() < new Date().getTime()
+        })
+        //
+        this.qapairsToBeAssessed.splice(0, this.qapairsToBeAssessed.length)
+        this.qapairsToBeAssessed.push.apply(this.qapairsToBeAssessed, qapairsToBeAssessed)
+        return this.qapairsToBeAssessed
+      })
   }
 
   newQAPair (formValue) {
@@ -60,7 +79,7 @@ export class QaPairsService {
   }
 
   isCorrectAnswer (id, answer) {
-    return this.http.post(`${this.qapairsUrl}/isCorrect`, {id, answer}, this.headers)
+    return this.http.post(`${this.qapairsUrl}/is_correct`, {id, answer}, this.headers)
       .map(response => {
         return response.json()
       })

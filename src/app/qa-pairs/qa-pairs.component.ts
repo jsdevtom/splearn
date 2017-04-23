@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
+import { filterToBeAssessed } from "app/helpers";
 
 
 @Component({
@@ -9,6 +10,7 @@ import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 })
 export class QaPairsComponent implements OnInit {
   private qapairs = []
+  private qapairsToBeAssessed = []
   private currentQapair
   private isEditMode: Boolean
   private shouldShowNewQAModal: Boolean = false
@@ -17,7 +19,10 @@ export class QaPairsComponent implements OnInit {
 
   ngOnInit() {
     this.qaService.getQAPairs()
-      .subscribe((qapairsArr) => this.qapairs = qapairsArr)
+      .subscribe((qapairsArr) => {
+        this.qapairs = qapairsArr
+        this.qapairsToBeAssessed = filterToBeAssessed(qapairsArr)
+      })
   }
 
   toggleNewQAModal(event?) {
