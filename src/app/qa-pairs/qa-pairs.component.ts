@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 import { filterToBeAssessed } from "app/helpers";
 
@@ -20,7 +21,10 @@ export class QaPairsComponent implements OnInit {
   ngOnInit() {
     this.qaService.getQAPairs()
       .subscribe((qapairsArr) => {
-        this.qapairs = qapairsArr
+        this.qapairs = qapairsArr.map((qapair) => {
+          qapair.toBeAssessedInTime = moment(qapair.toBeAssessedNext).fromNow()
+          return qapair
+        })
         this.qapairsToBeAssessed = filterToBeAssessed(qapairsArr)
       })
   }
