@@ -1,3 +1,5 @@
+const QuestionAnswerPair = require('./models/questionAnswerPair.model')
+
 module.exports.levenshtein = (a, b) => {
   if (a.length === 0) return b.length
   if (b.length === 0) return a.length
@@ -53,16 +55,25 @@ module.exports.nextAssessmentDate = (numCorrectAttempts, lastAssessedDate) => {
 }
 
 module.exports.attemptAnswer = (docObj, isCorrect) => {
-  let netCorrect = docObj.correctAttempts - docObj.wrongAttempts
   let curTime = new Date()
-  return Promise.all([
+  let dbUpdatePromises = [
     docObj.update({ $inc: { [isCorrect ? 'correctAttempts' : 'wrongAttempts']: 1 } }, { upsert: true }),
     docObj.update({ $set: { lastAssessed: curTime } }, { upsert: true })
-  ])
-  .then((results) => docObj.update({
+  ]
+
+  if (isCorrect === false && docObj.netCorrectAttempts > 0) {
+    dbUpdatePromises.push(docObj.update({ $inc: { netCorrectAttempts: -1 } }, { upsert: true }))
+  }
+  if (isCorrect === true) {
+    dbUpdatePromises.push(docObj.update({ $inc: { netCorrectAttempts: 1 } }, { upsert: true }))
+  }
+
+  return Promise.all(dbUpdatePromises)
+  .then((results) => QuestionAnswerPair.findById(docObj.id))
+  .then((updatedDocObj) => docObj.update({
     $set: {
       // toBeAssessedNext: module.exports.nextAssessmentDate(netCorrect, docObj.lastAssessed || docObj.createdAt)
-      toBeAssessedNext: module.exports.nextAssessmentDate(netCorrect, curTime)
+      toBeAssessedNext: module.exports.nextAssessmentDate(updatedDocObj.netCorrectAttempts, curTime)
     }
   }))
 }
