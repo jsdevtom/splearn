@@ -5,15 +5,18 @@
 </div>
 
 <div *ngFor="let qapair of qapairs" class="qapair">
-  <h3>Question: {{qapair.question}}</h3>
-  <h4>Correct answers:</h4>
-  <!--<span *ngFor="let correctAnswer of qapair.correctAnswers">
-      {{correctAnswer}}
-    </span>-->
-  <span> {{qapair.correctAnswers.join(', ')}}</span>
+  <h3>Question:</h3>
+  <legend>{{qapair.question}}</legend>
+  <div>
+    <h4>Correct answers:</h4>
+    <span class="answer correct" *ngFor="let correctAnswer of qapair.correctAnswers">{{correctAnswer}}</span>
+  </div>
   
-  <h4>Wrong answers:</h4>
-  <span> {{qapair.wrongAnswers.join(', ')}}</span>
+  <div *ngIf="qapair.wrongAnswers.length">
+    <h4>Wrong answers:</h4>
+    <span class="answer wrong" *ngFor="let wrongAnswer of qapair.wrongAnswers">{{wrongAnswer}}</span>
+  </div>
+  <h4>Due assessment {{qapair.toBeAssessedInTime}}</h4>
   <button type="submit" class="pure-button button-warning" (click)="onEdit(qapair)">Edit</button>
   <button type="submit" class="pure-button button-danger" (click)="onDelete(qapair._id)">Delete</button>
 </div>
