@@ -29,13 +29,15 @@ export class QuizComponent implements OnInit {
     this.qaService.getQAPairs()
       .subscribe((qapairs) => {
         this.quizQuestions = filterToBeAssessed(qapairs).slice(0, this.numOfQuestionsInQuiz)
+        if (this.quizQuestions.length < this.numOfQuestionsInQuiz) {
+          this.numOfQuestionsInQuiz = this.quizQuestions.length
+        }
         this.questionIndex = 0
         this.correctAnswerCount = 0
+        this.answeredQuestions = 0
+        this.showFeedbackScreen = false
         this.currentQAPair = this.quizQuestions.shift()
         this.currentQuestion = this.currentQAPair.question
-        if (qapairs.length < this.numOfQuestionsInQuiz) {
-          this.numOfQuestionsInQuiz = qapairs.length
-        }
       })  
     
     // this.qaService.getNthQuestion(0)
@@ -84,7 +86,7 @@ export class QuizComponent implements OnInit {
   }
 
   get isFinished (): Boolean {
-    return !(this.questionIndex < this.numOfQuestionsInQuiz)
+    return !(this.answeredQuestions < this.numOfQuestionsInQuiz)
   }
 
 }

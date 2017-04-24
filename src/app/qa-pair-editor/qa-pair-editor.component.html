@@ -23,6 +23,8 @@
         <button class="pure-button" (click)="addAnswer('wrongAnswers')" type="button">+ Add another Wrong Answer</button>
       </div>
 
+      <textarea id="explanation" formControlName="explanation" rows="1" placeholder="Explanation" (input)="autoResize($event)"></textarea>
+
       <button type="submit" class="pure-button pure-button-primary" [disabled]="!qaForm.valid">Save</button>
     </fieldset>
   </form>

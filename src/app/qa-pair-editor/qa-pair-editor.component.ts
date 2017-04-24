@@ -22,6 +22,7 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
     this.qaForm = this.fb.group({
       question: ['', Validators.required],
       correctAnswers: this.fb.array([this.fb.control('', Validators.required)]),
+      explanation: '',
       wrongAnswers: this.fb.array([])
     })
   }
@@ -40,6 +41,7 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
       this.setAnswers(this.currentQapair.correctAnswers, 'correctAnswers')
       this.setAnswers(this.currentQapair.wrongAnswers, 'wrongAnswers')
       this.qaForm.setControl('question', this.fb.control(this.currentQapair.question))
+      this.qaForm.setControl('explanation', this.fb.control(this.currentQapair.explanation))
     }
   }
 

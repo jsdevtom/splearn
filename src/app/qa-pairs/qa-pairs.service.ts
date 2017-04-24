@@ -50,6 +50,7 @@ export class QaPairsService {
       question: formValue.question,
       correctAnswers: formValue.correctAnswers,
       wrongAnswers: formValue.wrongAnswers,
+      explanation: formValue.explanation,
       createdAt: new Date()
     }, this.headers)
       .map(response => {

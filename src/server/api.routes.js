@@ -85,6 +85,7 @@ router.put('/qapairs/:id', function (req, res) {
       obj.question = req.body.question
       obj.correctAnswers = req.body.correctAnswers
       obj.wrongAnswers = req.body.wrongAnswers
+      obj.explanation = req.body.explanation
       return obj.save()
     })
     .then((obj) => res.status(200).json(obj))
