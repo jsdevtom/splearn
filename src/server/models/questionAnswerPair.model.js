@@ -6,6 +6,7 @@ const questionAnswerPairSchema = mongoose.Schema({
   question: String,
   correctAnswers: [String],
   wrongAnswers: [String],
+  explanation: String,
   createdAt: { type: Date, default: new Date() },
   correctAttempts: { type: Number, default: 0 },
   wrongAttempts: { type: Number, default: 0 },
