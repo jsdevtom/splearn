@@ -35,27 +35,19 @@ module.exports.levenshtein = (a, b) => {
 }
 
 module.exports.nextAssessmentDate = (numCorrectAttempts, lastAssessedDate) => {
-  const milliSecIntervals = [ 5000,
-    25000,
-    120000,
-    600000,
-    3600000,
-    18000000,
-    86400000,
-    432000000,
-    2160000000,
-    10512000000,
-    63072000000
-  ]
+  const milliSecIntervals = {
+    pimsleur: [5000, 25000, 120000, 600000, 3600000, 18000000, 86400000, 432000000, 2160000000, 10512000000, 63072000000],
+    wozniak: [60000, 86400000, 864000000, 2592000000, 5184000000, 10368000000, 20736000000]
+  }
   if (numCorrectAttempts < 0) {
     return new Date(
-      lastAssessedDate.getTime() + milliSecIntervals[0]
+      lastAssessedDate.getTime() + milliSecIntervals['wozniak'][0]
     )
-  } else if (numCorrectAttempts >= milliSecIntervals.length) {
+  } else if (numCorrectAttempts >= milliSecIntervals['wozniak'].length) {
     return new Date(8640000000000000)
   } else {
     return new Date(
-      lastAssessedDate.getTime() + milliSecIntervals[numCorrectAttempts]
+      lastAssessedDate.getTime() + milliSecIntervals['wozniak'][numCorrectAttempts]
     )
   }
 }
