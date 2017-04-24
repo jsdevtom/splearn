@@ -10,11 +10,15 @@ import { filterToBeAssessed } from "app/helpers";
 })
 export class QuizComponent implements OnInit {
   private questionIndex = 0
+  private answeredQuestions = 0
   private correctAnswerCount = 0
   private currentQAPair
   private currentQuestion
   private numOfQuestionsInQuiz = 10
   private quizQuestions = []
+  private showFeedbackScreen: boolean = false
+  private resultMessage: string
+  private percentageCorrect: string
   public QAForm = this.fb.group({
     answer: ["", Validators.required]
   })
@@ -52,13 +56,15 @@ export class QuizComponent implements OnInit {
   onSubmitAnswer() {
     this.qaService.isCorrectAnswer(this.currentQAPair._id, this.QAForm.value.answer)
       .subscribe((data) => {
+        this.showFeedbackScreen = true
+        this.answeredQuestions++
         if (data.isCorrect === true) {
-          console.log(`You're correct!`)
+          this.resultMessage = `You're correct!`
           this.correctAnswerCount++
         } else {
-          console.log(`Try again!`)
+          this.resultMessage = `Not quite!`
         }
-        this.questionIndex++
+        this.percentageCorrect = ((this.correctAnswerCount / this.answeredQuestions) * 100).toFixed()
         if (!this.isFinished) {
           this.currentQAPair = this.quizQuestions.shift()
           this.currentQuestion = this.currentQAPair.question
@@ -66,6 +72,11 @@ export class QuizComponent implements OnInit {
         }
       })
     this.QAForm.reset()
+  }
+
+  hideFeedbackScreen() {
+    this.showFeedbackScreen = false
+    this.questionIndex++
   }
 
   resetQuiz() {
