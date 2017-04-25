@@ -13,7 +13,6 @@ export class QuizComponent implements OnInit {
   private answeredQuestions = 0
   private correctAnswerCount = 0
   private currentQAPair
-  private currentQuestion
   private numOfQuestionsInQuiz = 10
   private quizQuestions = []
   private showFeedbackScreen: boolean = false
@@ -37,7 +36,6 @@ export class QuizComponent implements OnInit {
         this.answeredQuestions = 0
         this.showFeedbackScreen = false
         this.currentQAPair = this.quizQuestions.shift()
-        this.currentQuestion = this.currentQAPair.question
       })  
     
     // this.qaService.getNthQuestion(0)
@@ -67,11 +65,7 @@ export class QuizComponent implements OnInit {
           this.resultMessage = `Not quite!`
         }
         this.percentageCorrect = ((this.correctAnswerCount / this.answeredQuestions) * 100).toFixed()
-        if (!this.isFinished) {
-          this.currentQAPair = this.quizQuestions.shift()
-          this.currentQuestion = this.currentQAPair.question
-        } else {
-        }
+        
       })
     this.QAForm.reset()
   }
@@ -79,6 +73,9 @@ export class QuizComponent implements OnInit {
   hideFeedbackScreen() {
     this.showFeedbackScreen = false
     this.questionIndex++
+    if (!this.isFinished) {
+      this.currentQAPair = this.quizQuestions.shift()
+    }
   }
 
   resetQuiz() {

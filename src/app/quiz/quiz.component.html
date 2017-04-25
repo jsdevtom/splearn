@@ -8,14 +8,20 @@
     (ngSubmit)="onSubmitAnswer($event)"
     *ngIf="!showFeedbackScreen">
     <fieldset>
-      <legend>{{ currentQuestion }}</legend>
+      <legend>{{ currentQAPair?.question }}</legend>
   
       <input type="text" name="answer" formControlName="answer" autocomplete="off">
       <button type="submit" class="pure-button pure-button-primary">Submit</button>
     </fieldset>
   </form>
+
   <div *ngIf="showFeedbackScreen">
     <h2>{{resultMessage}}</h2>
+    <div class="correctAnswersContainer">
+      <h4>Correct answers:</h4>
+      <span class="answer correct" *ngFor="let correctAnswer of currentQAPair.correctAnswers">{{correctAnswer}}</span>
+    </div>
+    <legend>{{ currentQAPair?.explanation }}</legend>
     <button type="button" class="pure-button pure-button-primary" (click)="hideFeedbackScreen()">Continue</button>
   </div>
 </div>
@@ -26,5 +32,4 @@
   </div>
   <button [routerLink]="[ '/' ]" type="button" class="pure-button pure-button-primary">Go Home</button>
   <button (click)="resetQuiz()" type="button" class="pure-button pure-button-primary">Quiz me again</button>
-  
 </div>
