@@ -14,7 +14,11 @@
   
   <div *ngIf="qapair.wrongAnswers.length">
     <h4>Wrong answers:</h4>
-    <span class="answer wrong" *ngFor="let wrongAnswer of qapair.wrongAnswers">{{wrongAnswer}}</span>
+    <span class="answer wrong" *ngFor="let wrongAnswer of qapair.wrongAnswers">{{ wrongAnswer }}</span>
+  </div>
+  <div *ngIf="qapair.explanation">
+    <h4>Explanation:</h4>
+    <legend>{{ qapair.explanation }}</legend>
   </div>
   <h4>Due assessment {{qapair.toBeAssessedInTime}}</h4>
   <button type="submit" class="pure-button button-warning" (click)="onEdit(qapair)">Edit</button>
