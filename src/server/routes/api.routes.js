@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { levenshtein, attemptAnswer } = require('./helpers')
+const { levenshtein, attemptAnswer } = require('../helpers')
 // Models
-const QuestionAnswerPair = require('./models/questionAnswerPair.model')
+const QuestionAnswerPair = require('../models/questionAnswerPair.model')
 
 // select all
 router.get('/qapairs', function (req, res) {
