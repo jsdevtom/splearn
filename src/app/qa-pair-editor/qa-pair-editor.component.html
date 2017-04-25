@@ -5,19 +5,19 @@
     <fieldset>
       <legend>{{ isNew ? 'Add': 'Edit' }} a Question</legend>
 
-      <textarea id="question" formControlName="question" rows="1" placeholder="Question" (input)="autoResize($event)"></textarea>
+      <textarea id="question" formControlName="question" rows="1" placeholder="Question" (input)="autoResize($event)" title="This field is required"></textarea>
 
       <div class="pure-group" formArrayName="correctAnswers">
         <div *ngFor="let correctAnswer of correctAnswers.controls; let i=index" class="answerInputContainer nestForInput">
-          <textarea rows="1" [formControlName]="i" placeholder="Correct Answer" (input)="autoResize($event)"></textarea>
-          <button type="button" (click)="removeAnswer(correctAnswer, 'correctAnswers')" class="exit deleteAnswer">X</button>
+          <textarea rows="1" [formControlName]="i" placeholder="Correct Answer" (input)="autoResize($event)" title="This field is required"></textarea>
+          <button type="button" (click)="removeAnswer(i, 'correctAnswers')" class="exit deleteAnswer">X</button>
         </div>
         <button class="pure-button" (click)="addAnswer('correctAnswers')" type="button">+ Add another Correct Answer</button>
       </div>
 
       <div class="pure-group" formArrayName="wrongAnswers">
         <div *ngFor="let wrongAnswer of wrongAnswers.controls; let i=index" class="answerInputContainer nestForInput">
-          <textarea rows="1" [formControlName]="i" placeholder="Wrong Answer" (input)="autoResize($event)"></textarea>
+          <textarea rows="1" [formControlName]="i" placeholder="Wrong Answer" (input)="autoResize($event)" title="This field is required"></textarea>
           <button type="button" (click)="removeAnswer(i, 'wrongAnswers')" class="exit deleteAnswer">X</button>
         </div>
         <button class="pure-button" (click)="addAnswer('wrongAnswers')" type="button">+ Add another Wrong Answer</button>
