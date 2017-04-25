@@ -49,4 +49,7 @@ textarea {
   resize: none;
   width: 90%;
   overflow: hidden;
+  &.ng-invalid.ng-touched  {
+    border-color: #ea1212;
+  }
 }
