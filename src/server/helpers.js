@@ -1,5 +1,3 @@
-const QuestionAnswerPair = require('./models/questionAnswerPair.model')
-
 module.exports.levenshtein = (a, b) => {
   if (a.length === 0) return b.length
   if (b.length === 0) return a.length
@@ -54,7 +52,7 @@ module.exports.nextAssessmentDate = (numCorrectAttempts, lastAssessedDate) => {
   }
 }
 
-module.exports.attemptAnswer = (docObj, isCorrect) => {
+module.exports.attemptAnswer = (docObj, Model, isCorrect) => {
   let curTime = new Date()
   let dbUpdatePromises = [
     docObj.update({ $inc: { [isCorrect ? 'correctAttempts' : 'wrongAttempts']: 1 } }, { upsert: true }),
@@ -69,7 +67,7 @@ module.exports.attemptAnswer = (docObj, isCorrect) => {
   }
 
   return Promise.all(dbUpdatePromises)
-  .then((results) => QuestionAnswerPair.findById(docObj.id))
+  .then((results) => Model.findById(docObj.id))
   .then((updatedDocObj) => docObj.update({
     $set: {
       // toBeAssessedNext: module.exports.nextAssessmentDate(netCorrect, docObj.lastAssessed || docObj.createdAt)
