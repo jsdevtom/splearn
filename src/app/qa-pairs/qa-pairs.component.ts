@@ -27,6 +27,11 @@ export class QaPairsComponent implements OnInit {
         })
         this.qapairsToBeAssessed = filterToBeAssessed(qapairsArr)
       })
+    this.qaService.qapairsChanged
+      .subscribe((updatedQAPairs) => {
+        this.qapairs = updatedQAPairs
+        this.qapairsToBeAssessed = filterToBeAssessed(updatedQAPairs)
+      })
   }
 
   toggleNewQAModal(event?) {

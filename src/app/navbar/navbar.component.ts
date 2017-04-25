@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
+import { filterToBeAssessed } from "../helpers"
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,10 @@ export class NavbarComponent implements OnInit {
     this.qaService.getQAPairstoBeAssessed()
       .subscribe((qapairsToBeAssessed) => {
         this.numToBeAssessed = qapairsToBeAssessed.length
+      })
+    this.qaService.qapairsChanged
+      .subscribe((updatedQAPairs) => {
+        this.numToBeAssessed = filterToBeAssessed(updatedQAPairs).length
       })
   }
 

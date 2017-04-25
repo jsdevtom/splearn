@@ -7,9 +7,9 @@ import 'rxjs/add/operator/map';
 export class QaPairsService {
   public qapairs = []
   public qapairsToBeAssessed = []
+  public qapairsChanged = new EventEmitter()
   private headers = new Headers({'Content-Type': 'application/json'});
   private qapairsUrl = 'api/qapairs'
-  private qapairsChanged = new EventEmitter()
 
   constructor(private http: Http) { }
   
@@ -31,7 +31,6 @@ export class QaPairsService {
       .map(response => response.json())
   }
 
-  /* Made obselete by using the helper filterToBeAssessed in the helpers.ts file */
   getQAPairstoBeAssessed () {
     return this.getQAPairs()
       .map(response => {
@@ -56,7 +55,10 @@ export class QaPairsService {
       .map(response => {
         return response.json()
       })
-      .subscribe((data) => this.qapairs.push(data))
+      .subscribe((data) => {
+        this.qapairs.push(data)
+        this.qapairsChanged.emit(this.qapairs)
+      })
   }
 
   updateQAPair (qapairID: string, formValue) {
@@ -65,7 +67,8 @@ export class QaPairsService {
         return response.json()
       })
       .subscribe((data) => {
-        return this.qapairs.splice(this.qapairs.findIndex((element) => element._id === qapairID), 1, data)
+        this.qapairs.splice(this.qapairs.findIndex((element) => element._id === qapairID), 1, data)
+        this.qapairsChanged.emit(this.qapairs)
       })
   }
 
@@ -76,12 +79,15 @@ export class QaPairsService {
       })
       .subscribe(() => {
         this.qapairs.splice(this.qapairs.findIndex((element) => element._id === id), 1)
+        this.qapairsChanged.emit(this.qapairs)
       })
   }
 
   isCorrectAnswer (id, answer) {
     return this.http.post(`${this.qapairsUrl}/is_correct`, {id, answer}, this.headers)
       .map(response => {
+        this.qapairs = response.json().qaPairs
+        this.qapairsChanged.emit(this.qapairs)
         return response.json()
       })
   }
