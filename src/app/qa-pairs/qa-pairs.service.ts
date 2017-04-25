@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 export class QaPairsService {
   public qapairs = []
   public qapairsToBeAssessed = []
-  public qapairsChanged = new EventEmitter()
+  public qapairsChanged: EventEmitter<any[]> = new EventEmitter()
   private headers = new Headers({'Content-Type': 'application/json'});
   private qapairsUrl = 'api/qapairs'
 

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 import { FormBuilder, Validators } from "@angular/forms";
 import { filterToBeAssessed } from "app/helpers";
@@ -8,7 +10,8 @@ import { filterToBeAssessed } from "app/helpers";
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss']
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnDestroy, OnInit {
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private questionIndex = 0
   private answeredQuestions = 0
   private correctAnswerCount = 0
@@ -26,6 +29,7 @@ export class QuizComponent implements OnInit {
 
   ngOnInit() {
     this.qaService.getQAPairs()
+      .takeUntil(this.ngUnsubscribe)
       .subscribe((qapairs) => {
         this.quizQuestions = filterToBeAssessed(qapairs).slice(0, this.numOfQuestionsInQuiz)
         if (this.quizQuestions.length < this.numOfQuestionsInQuiz) {
@@ -84,6 +88,11 @@ export class QuizComponent implements OnInit {
 
   get isFinished (): Boolean {
     return !(this.answeredQuestions < this.numOfQuestionsInQuiz)
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 }

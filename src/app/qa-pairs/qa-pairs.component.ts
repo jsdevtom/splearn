@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 import { filterToBeAssessed } from "app/helpers";
@@ -9,7 +11,8 @@ import { filterToBeAssessed } from "app/helpers";
   templateUrl: './qa-pairs.component.html',
   styleUrls: ['./qa-pairs.component.scss']
 })
-export class QaPairsComponent implements OnInit {
+export class QaPairsComponent implements OnDestroy, OnInit {
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private qapairs = []
   private qapairsToBeAssessed = []
   private currentQapair
@@ -20,6 +23,7 @@ export class QaPairsComponent implements OnInit {
 
   ngOnInit() {
     this.qaService.getQAPairs()
+      .takeUntil(this.ngUnsubscribe)
       .subscribe((qapairsArr) => {
         this.qapairs = qapairsArr.map((qapair) => {
           qapair.toBeAssessedInTime = moment(qapair.toBeAssessedNext).fromNow()
@@ -28,6 +32,7 @@ export class QaPairsComponent implements OnInit {
         this.qapairsToBeAssessed = filterToBeAssessed(qapairsArr)
       })
     this.qaService.qapairsChanged
+      .takeUntil(this.ngUnsubscribe)      
       .subscribe((updatedQAPairs) => {
         this.qapairs = updatedQAPairs
         this.qapairsToBeAssessed = filterToBeAssessed(updatedQAPairs)
@@ -52,5 +57,10 @@ export class QaPairsComponent implements OnInit {
   onNewQAPair() {
     this.currentQapair = null
     this.toggleNewQAModal()
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
