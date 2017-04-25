@@ -17,8 +17,7 @@ const questionAnswerPairSchema = mongoose.Schema({
 })
 
 questionAnswerPairSchema.pre('save', function (next) {
-  let netCorrect = this.correctAttempts - this.wrongAttempts
-  this.toBeAssessedNext = nextAssessmentDate(netCorrect, this.lastAssessed || this.createdAt)
+  this.toBeAssessedNext = nextAssessmentDate(this.netCorrectAttempts, this.lastAssessed || this.createdAt)
   next()
 })
 
@@ -36,7 +35,8 @@ questionAnswerPairSchema.pre('save', function (next) {
 
 var QuestionAnswerPair = mongoose.model('QuestionAnswerPair', questionAnswerPairSchema)
 
-let newQAPair = new QuestionAnswerPair({})
-newQAPair.toBeAssessedNext
+// For Debugging
+// let newQAPair = new QuestionAnswerPair({})
+// newQAPair.toBeAssessedNext
 
 module.exports = QuestionAnswerPair
