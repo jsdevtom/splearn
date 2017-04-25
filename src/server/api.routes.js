@@ -66,14 +66,15 @@ router.post('/qapairs/is_correct', function (req, res) {
         if ((levenshtein(correctAnswer, req.body.answer) / correctAnswer.length) <= 0.25 &&
           !wrongAnswers.includes(req.body.answer)) {
           isCorrect = true
-          return attemptAnswer(obj, isCorrect)
+          return attemptAnswer(obj, QuestionAnswerPair, isCorrect)
         }
       }
       isCorrect = false
-      return attemptAnswer(obj, isCorrect)
+      return attemptAnswer(obj, QuestionAnswerPair, isCorrect)
     })
-    .then((updateResult) => {
-      return res.status(200).json({ isCorrect })
+    .then((updateResult) => QuestionAnswerPair.find({}))
+    .then((qaPairs) => {
+      return res.status(200).json({ qaPairs, isCorrect })
     })
     .catch((err) => console.error(err))
 })
