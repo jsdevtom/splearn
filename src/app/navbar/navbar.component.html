@@ -5,6 +5,8 @@
   .remove('responsive')"><a [routerLink]="[ '/qapairs' ]">Questions</a></li>
   <li onclick="myTopnav.classList
   .remove('responsive')"><a [routerLink]="[ '/revise' ]">Revise ({{ numToBeAssessed }})</a></li>
+  <li *ngIf="isLoggedIn" onclick="myTopnav.classList
+  .remove('responsive')" (click)="onLogOut()"><a>Log out</a></li>
   <li class="menuToggle" onclick="myTopnav.classList
   .toggle('responsive')">
     <a href="javascript:void(0);">&#9776;</a>
