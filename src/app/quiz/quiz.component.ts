@@ -40,21 +40,7 @@ export class QuizComponent implements OnDestroy, OnInit {
         this.answeredQuestions = 0
         this.showFeedbackScreen = false
         this.currentQAPair = this.quizQuestions.shift()
-      })  
-    
-    // this.qaService.getNthQuestion(0)
-    //   .subscribe((data) => {
-    //     this.questionIndex = 0
-    //     this.correctAnswerCount = 0
-    //     this.currentQAPair = data
-    //     this.currentQuestion = data.question    
-    //   })
-    // this.qaService.getQAPairs()
-    //   .subscribe((qapairs) => {
-    //     if (qapairs.length < this.numOfQuestionsInQuiz) {
-    //       this.numOfQuestionsInQuiz = qapairs.length
-    //     }
-    //   }) 
+      })
   }
 
   onSubmitAnswer() {

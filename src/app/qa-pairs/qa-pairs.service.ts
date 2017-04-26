@@ -13,10 +13,6 @@ export class QaPairsService {
 
   constructor(private http: Http) { }
   
-  /**
-   * Get QA Pairs from the server. 
-   * Also initiates this.qapairs and this.qapairsToBeAssessed
-   */
   getQAPairs () {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
     return this.http.get(this.qapairsUrl + jwt)
@@ -24,13 +20,6 @@ export class QaPairsService {
         this.qapairs = response.json()
         return this.qapairs
       })
-  }
-
-  getNthQuestion (n) {
-    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    // n is 0 based
-    return this.http.get(`${this.qapairsUrl}/question/${n}${jwt}`)
-      .map(response => response.json())
   }
 
   getQAPairstoBeAssessed () {
@@ -42,6 +31,7 @@ export class QaPairsService {
         //
         this.qapairsToBeAssessed.splice(0, this.qapairsToBeAssessed.length)
         this.qapairsToBeAssessed.push.apply(this.qapairsToBeAssessed, qapairsToBeAssessed)
+        this.qapairsChanged.emit(this.qapairs)
         return this.qapairsToBeAssessed
       })
   }
