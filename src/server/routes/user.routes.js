@@ -22,7 +22,7 @@ router.post('/signin', function (req, res) {
   let statusCode
   User.findOne({email: req.body.email})
     .then((userFound) => new Promise((resolve, reject) => {
-      let token
+      let signedJWT
       if (
         !userFound ||
         !bcrypt.compareSync(req.body.password, userFound.password)
@@ -30,8 +30,8 @@ router.post('/signin', function (req, res) {
         statusCode = 401
         return reject('Login Failed')
       }
-      token = jwt.sign({user: userFound}, process.env.JWT_SECRET, {expiresIn: '30d'})
-      resolve({token, userId: userFound._id})
+      signedJWT = jwt.sign({user: userFound}, process.env.JWT_SECRET, {expiresIn: '30d'})
+      resolve({jwt: signedJWT, userId: userFound._id, firstName: userFound.firstName})
     }))
     .then((objToBeSent) => {
       res.status(200).json(objToBeSent)
