@@ -1,3 +1,5 @@
+@import 'variables';
+
 .newQAModalBackDrop {
   width: 100vw;
   max-width:100%;
@@ -49,7 +51,4 @@ textarea {
   resize: none;
   width: 90%;
   overflow: hidden;
-  &.ng-invalid.ng-touched  {
-    border-color: #ea1212;
-  }
 }
