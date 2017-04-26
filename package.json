@@ -28,7 +28,9 @@
     "body-parser": "^1.17.1",
     "concurrently": "^3.4.0",
     "core-js": "^2.4.1",
+    "dotenv": "^4.0.0",
     "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.0",
     "moment": "^2.18.1",
     "mongoose": "^4.9.0",
     "mongoose-unique-validator": "^1.0.5",
@@ -39,11 +41,11 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
+    "@angular/cli": "^1.0.1",
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
     "@types/moment": "^2.13.0",
     "@types/node": "^6.0.42",
-    "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
