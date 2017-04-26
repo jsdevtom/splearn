@@ -1,4 +1,4 @@
-@import '../variables';
+@import 'variables';
 
 //dimensions
 $em-logo: 1.4em;
@@ -14,6 +14,7 @@ ul.topnav {
   background-color: $color_mine_shaft_approx;
   li {
     display: none;
+    cursor: pointer;
     &.currentPage, .menuToggle {
       display: flex;
     }
