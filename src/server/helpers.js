@@ -52,26 +52,18 @@ module.exports.nextAssessmentDate = (numCorrectAttempts, lastAssessedDate) => {
   }
 }
 
-module.exports.attemptAnswer = (docObj, Model, isCorrect) => {
+/* Updates `correctAttempts` `wrongAttempts` according to `isCorrect` */
+module.exports.attemptAnswer = (qapair, isCorrect) => {
   let curTime = new Date()
-  let dbUpdatePromises = [
-    docObj.update({ $inc: { [isCorrect ? 'correctAttempts' : 'wrongAttempts']: 1 } }, { upsert: true }),
-    docObj.update({ $set: { lastAssessed: curTime } }, { upsert: true })
-  ]
-
-  if (isCorrect === false && docObj.netCorrectAttempts > 0) {
-    dbUpdatePromises.push(docObj.update({ $inc: { netCorrectAttempts: -1 } }, { upsert: true }))
-  }
-  if (isCorrect === true) {
-    dbUpdatePromises.push(docObj.update({ $inc: { netCorrectAttempts: 1 } }, { upsert: true }))
-  }
-
-  return Promise.all(dbUpdatePromises)
-  .then((results) => Model.findById(docObj.id))
-  .then((updatedDocObj) => docObj.update({
-    $set: {
-      // toBeAssessedNext: module.exports.nextAssessmentDate(netCorrect, docObj.lastAssessed || docObj.createdAt)
-      toBeAssessedNext: module.exports.nextAssessmentDate(updatedDocObj.netCorrectAttempts, curTime)
+  qapair.lastAssessed = curTime
+  if (isCorrect) {
+    qapair.correctAttempts++
+    qapair.netCorrectAttempts++
+  } else {
+    qapair.wrongAttempts++
+    if (qapair.netCorrectAttempts > 0) {
+      qapair.netCorrectAttempts--
     }
-  }))
+  }
+  qapair.toBeAssessedNext = module.exports.nextAssessmentDate(qapair.netCorrectAttempts, curTime)
 }

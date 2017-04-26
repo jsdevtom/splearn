@@ -2,74 +2,60 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { levenshtein, attemptAnswer } = require('../helpers')
-// Models
-const QuestionAnswerPair = require('../models/questionAnswerPair.model')
 const User = require('../models/user.model')
 
 router.use('/', (req, res, next) => {
   jwt.verify(req.query.jwt, process.env.JWT_SECRET, (err, decoded) => {
     if (err) return res.status(401).json(err)
+    req.body.decodedUserID = jwt.decode(req.query.jwt).user
     next()
   })
 })
 
 // select all
 router.get('/qapairs', function (req, res) {
-  QuestionAnswerPair.find()
-    .then((docs) => {
-      res.json(docs)
-    })
-    .catch((err) => console.error(err))
-})
-
-// find nth question
-router.get('/qapairs/question/:n', function (req, res) {
-  QuestionAnswerPair.findOne({}, 'question _id', { skip: +req.params.n })
-    .then((doc) => {
-      res.json(doc)
-    })
-    .catch((err) => console.error(err))
-})
-
-// currently obselete; logic in front end because the front end needs to get the all the answers on page load anyway.
-// get the answers to be reviewed
-router.get('/qapairs/due-to-be-reviewed', function (req, res) {
-  QuestionAnswerPair.find({
-    toBeAssessedNext: { $lte: new Date() }
-  })
-    .then((doc) => {
-      res.json(doc.length)
+  User.findById(req.body.decodedUserID)
+    .then((foundUser) => {
+      res.json(foundUser.qapairs)
     })
     .catch((err) => console.error(err))
 })
 
 // create
 router.post('/qapairs', function (req, res) {
-  const decodedUser = jwt.decode(req.query.jwt).user
-  let user
-  User.findById(decodedUser._id)
+  let newQaPair
+  User.findById(req.body.decodedUserID)
     .then(foundUser => {
-      user = foundUser
-      req.body.user = foundUser._id
-      let qapair = new QuestionAnswerPair(req.body)
-      return qapair.save()
+      newQaPair = foundUser.qapairs.create({
+        question: req.body.question,
+        correctAnswers: req.body.correctAnswers,
+        wrongAnswers: req.body.wrongAnswers,
+        explanation: req.body.explanation,
+        createdAt: req.body.createdAt
+      })
+      foundUser.qapairs.push(newQaPair)
+      return foundUser.save()
     })
     .then((result) => {
-      user.qapairs.push(result._id)
-      user.save()
-      res.status(201).json(result)
+      res.status(201).json(newQaPair)
     })
     .catch((err) => res.status(500).json(err))
 })
 
-// check if answer is correct
+// check if answer is correct then return `{ qaPairs, isCorrect }`
 router.post('/qapairs/is_correct', function (req, res) {
   let isCorrect
 
-  QuestionAnswerPair.findById(req.body.id)
-    .then((obj) => {
-      const correctAnswers = obj.correctAnswers
-      const wrongAnswers = obj.wrongAnswers
+  User.findById(req.body.decodedUserID)
+    .then(foundUser => {
+      const qapair = foundUser.qapairs.id(req.body.id)
+      const { correctAnswers, wrongAnswers } = qapair
+      function onDeterminedIfCorrect (wasItCorrect) {
+        isCorrect = wasItCorrect
+        attemptAnswer(qapair, isCorrect)
+        return foundUser.save()
+      }
+
       for (let i = 0; i < correctAnswers.length; i++) {
         let correctAnswer = correctAnswers[i]
 
@@ -83,41 +69,44 @@ router.post('/qapairs/is_correct', function (req, res) {
         */
         if ((levenshtein(correctAnswer, req.body.answer) / correctAnswer.length) <= 0.25 &&
           !wrongAnswers.includes(req.body.answer)) {
-          isCorrect = true
-          return attemptAnswer(obj, QuestionAnswerPair, isCorrect)
+          return onDeterminedIfCorrect(true)
         }
+        return onDeterminedIfCorrect(false)
       }
-      isCorrect = false
-      return attemptAnswer(obj, QuestionAnswerPair, isCorrect)
     })
-    .then((updateResult) => QuestionAnswerPair.find({}))
-    .then((qaPairs) => {
-      return res.status(200).json({ qaPairs, isCorrect })
-    })
-    .catch((err) => console.error(err))
+    .then((updatedUser) => res.status(200).json({ qaPairs: updatedUser.qapairs, isCorrect }))
+    .catch((err) => res.status(500).json(err))
 })
 
 // update by id
 router.put('/qapairs/:id', function (req, res) {
-  QuestionAnswerPair.findById(req.params.id)
-    .then((obj) => {
-      obj.question = req.body.question
-      obj.correctAnswers = req.body.correctAnswers
-      obj.wrongAnswers = req.body.wrongAnswers
-      obj.explanation = req.body.explanation
-      return obj.save()
+  let qapair
+  User.findById(req.body.decodedUserID)
+    .then(foundUser => {
+      qapair = foundUser.qapairs.id(req.body.id)
+      qapair.question = req.body.question
+      qapair.correctAnswers = req.body.correctAnswers
+      qapair.wrongAnswers = req.body.wrongAnswers
+      qapair.explanation = req.body.explanation
+      return foundUser.save()
     })
-    .then((obj) => res.status(200).json(obj))
-    .catch((err) => console.error(err))
+    .then((updatedUser) => res.status(200).json(qapair))
+    .catch((err) => res.status(500).json(err))
 })
 
 // delete by id
 router.delete('/qapairs/:id', function (req, res) {
-  QuestionAnswerPair.findByIdAndRemove(req.params.id)
-    .then((deletedObj) => {
-      res.status(200).json(deletedObj)
+  let qapair
+  User.findById(req.body.decodedUserID)
+    .then(foundUser => {
+      qapair = foundUser.qapairs.id(req.params.id)
+      qapair.remove()
+      return foundUser.save()
     })
-    .catch((err) => console.error(err))
+    .then((deletedObj) => {
+      res.status(200).json(qapair)
+    })
+    .catch((err) => res.status(500).json(err))
 })
 
 module.exports = router
