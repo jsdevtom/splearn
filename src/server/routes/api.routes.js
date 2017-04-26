@@ -1,8 +1,17 @@
 const express = require('express')
 const router = express.Router()
+const jwt = require('jsonwebtoken')
 const { levenshtein, attemptAnswer } = require('../helpers')
 // Models
 const QuestionAnswerPair = require('../models/questionAnswerPair.model')
+const User = require('../models/user.model')
+
+router.use('/', (req, res, next) => {
+  jwt.verify(req.query.jwt, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(401).json(err)
+    next()
+  })
+})
 
 // select all
 router.get('/qapairs', function (req, res) {
@@ -36,12 +45,21 @@ router.get('/qapairs/due-to-be-reviewed', function (req, res) {
 
 // create
 router.post('/qapairs', function (req, res) {
-  let obj = new QuestionAnswerPair(req.body)
-  obj.save()
-    .then((obj) => {
-      res.status(200).json(obj)
+  const decodedUser = jwt.decode(req.query.jwt).user
+  let user
+  User.findById(decodedUser._id)
+    .then(foundUser => {
+      user = foundUser
+      req.body.user = foundUser._id
+      let qapair = new QuestionAnswerPair(req.body)
+      return qapair.save()
     })
-    .catch((err) => console.error(err))
+    .then((result) => {
+      user.qapairs.push(result._id)
+      user.save()
+      res.status(201).json(result)
+    })
+    .catch((err) => res.status(500).json(err))
 })
 
 // check if answer is correct

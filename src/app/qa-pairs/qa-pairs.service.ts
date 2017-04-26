@@ -8,7 +8,7 @@ export class QaPairsService {
   public qapairs = []
   public qapairsToBeAssessed = []
   public qapairsChanged: EventEmitter<any[]> = new EventEmitter()
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new Headers({'Content-Type': 'application/json'})
   private qapairsUrl = 'api/qapairs'
 
   constructor(private http: Http) { }
@@ -18,7 +18,8 @@ export class QaPairsService {
    * Also initiates this.qapairs and this.qapairsToBeAssessed
    */
   getQAPairs () {
-    return this.http.get(this.qapairsUrl)
+    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
+    return this.http.get(this.qapairsUrl + jwt)
       .map(response => {
         this.qapairs = response.json()
         return this.qapairs
@@ -26,8 +27,9 @@ export class QaPairsService {
   }
 
   getNthQuestion (n) {
+    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
     // n is 0 based
-    return this.http.get(`${this.qapairsUrl}/question/${n}`)
+    return this.http.get(`${this.qapairsUrl}/question/${n}${jwt}`)
       .map(response => response.json())
   }
 
@@ -45,7 +47,8 @@ export class QaPairsService {
   }
 
   newQAPair (formValue) {
-    return this.http.post(this.qapairsUrl, {
+    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
+    return this.http.post(this.qapairsUrl + jwt, {
       question: formValue.question,
       correctAnswers: formValue.correctAnswers,
       wrongAnswers: formValue.wrongAnswers,
@@ -62,7 +65,8 @@ export class QaPairsService {
   }
 
   updateQAPair (qapairID: string, formValue) {
-    return this.http.put(`${this.qapairsUrl}/${qapairID}`, formValue)
+    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
+    return this.http.put(`${this.qapairsUrl}/${qapairID}${jwt}`, formValue)
       .map(response => {
         return response.json()
       })
@@ -73,7 +77,8 @@ export class QaPairsService {
   }
 
   deleteQAPair (id) {
-    return this.http.delete(`${this.qapairsUrl}/${id}`)
+    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
+    return this.http.delete(`${this.qapairsUrl}/${id}${jwt}`)
       .map(response => {
         return response.json()
       })
@@ -84,7 +89,8 @@ export class QaPairsService {
   }
 
   isCorrectAnswer (id, answer) {
-    return this.http.post(`${this.qapairsUrl}/is_correct`, {id, answer}, this.headers)
+    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
+    return this.http.post(`${this.qapairsUrl}/is_correct${jwt}`, {id, answer}, this.headers)
       .map(response => {
         this.qapairs = response.json().qaPairs
         this.qapairsChanged.emit(this.qapairs)
