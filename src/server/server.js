@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const morgan = require('morgan') // logger
 const bodyParser = require('body-parser')
+require('dotenv').config()
+
 const apiRoutes = require('./routes/api.routes')
 const userRoutes = require('./routes/user.routes')
 
