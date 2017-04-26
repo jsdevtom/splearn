@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 })
 export class SignInComponent implements OnInit {
   private signinForm: FormGroup
+  private firstName
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -19,8 +20,9 @@ export class SignInComponent implements OnInit {
     this.authService.signIn(user)
       .subscribe(
         data => {
-          localStorage.setItem('jwt', data.token)
+          localStorage.setItem('jwt', data.jwt)
           localStorage.setItem('userId', data.userId)
+          this.firstName = data.firstName
           this.router.navigateByUrl('/')
        },
        error => console.error(error))
