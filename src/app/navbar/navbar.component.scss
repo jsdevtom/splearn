@@ -3,15 +3,20 @@
 //dimensions
 $em-logo: 1.4em;
 
+:host {
+  background-color: $color_mine_shaft_approx;
+  display: block
+}
+
 ul.topnav {
   list-style-type: none;
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   overflow: hidden;
-  background-color: $color_mine_shaft_approx;
+  max-width: $max-width-container;
   li {
     display: none;
     cursor: pointer;

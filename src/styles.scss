@@ -1,7 +1,7 @@
 @import 'variables';
 
 .container {
-  max-width: 960px;
+  max-width: $max-width-container;
   margin: 0 auto;
   padding: 5px;
   @media (min-width: 560px) {

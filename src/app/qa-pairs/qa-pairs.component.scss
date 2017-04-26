@@ -4,6 +4,23 @@
   }
 }
 
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.qapairs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.questionsToBeReviewedDiv {
+  margin-right: 25px;
+}
+
 .qapair {
   border: 1px #ccc solid;
   border-radius: 5px;
@@ -11,6 +28,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: flex-start;
+  flex-basis: 293px;
+  margin: 20px 10px;
   > *:not(button) {
     display: block;
     width: 100%;
