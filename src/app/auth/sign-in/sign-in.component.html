@@ -1,0 +1,29 @@
+<form class="pure-form pure-form-stacked" [formGroup]="signinForm" (ngSubmit)="isNew ? doNewQA($event) : updateQA($event)">
+  <fieldset>
+
+    <legend>Email</legend>
+    <input 
+      id="email" 
+      formControlName="email" 
+      rows="1" 
+      placeholder="email"
+      title="This field is required">
+
+    <legend>Password</legend>
+    <input 
+      id="password" 
+      type="password" 
+      formControlName="password" 
+      rows="1" 
+      placeholder="Password" 
+      title="This field is required">
+
+  </fieldset>
+  <button 
+    type="submit" 
+    class="pure-button pure-button-primary" 
+    [disabled]="!signinForm.valid"
+    (click)="onSubmit()">
+    Log in
+  </button>
+</form>

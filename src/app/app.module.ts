@@ -10,6 +10,9 @@ import { QaPairsComponent } from './qa-pairs/qa-pairs.component';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 import { QuizComponent } from './quiz/quiz.component';
 import { QaPairEditorComponent } from './qa-pair-editor/qa-pair-editor.component';
+import { AuthService } from "app/auth/auth.service";
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,9 @@ import { QaPairEditorComponent } from './qa-pair-editor/qa-pair-editor.component
     NavbarComponent,
     QaPairsComponent,
     QuizComponent,
-    QaPairEditorComponent
+    QaPairEditorComponent,
+    SignUpComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,8 @@ import { QaPairEditorComponent } from './qa-pair-editor/qa-pair-editor.component
   ],
   providers: [
     QaPairsService,
-    { provide: 'Body',  useValue: document.body }
+    { provide: 'Body',  useValue: document.body },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
