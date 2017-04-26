@@ -9,12 +9,12 @@
   <legend>{{qapair.question}}</legend>
   <div>
     <h4>Correct answers:</h4>
-    <span class="answer correct" *ngFor="let correctAnswer of qapair.correctAnswers">{{correctAnswer}}</span>
+    <div class="answer correct" *ngFor="let correctAnswer of qapair.correctAnswers">{{correctAnswer}}</div>
   </div>
   
   <div *ngIf="qapair.wrongAnswers.length">
     <h4>Wrong answers:</h4>
-    <span class="answer wrong" *ngFor="let wrongAnswer of qapair.wrongAnswers">{{ wrongAnswer }}</span>
+    <div class="answer wrong" *ngFor="let wrongAnswer of qapair.wrongAnswers">{{ wrongAnswer }}</div>
   </div>
   <div *ngIf="qapair.explanation">
     <h4>Explanation:</h4>
