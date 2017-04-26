@@ -1,4 +1,5 @@
 const { mongoose } = require('../imports')
+const User = require('../models/user.model')
 
 const { nextAssessmentDate } = require('../helpers')
 
@@ -13,12 +14,22 @@ const questionAnswerPairSchema = mongoose.Schema({
   netCorrectAttempts: { type: Number, default: 0 },
   timesAssessed: { type: Number, default: 0 },
   lastAssessed: Date,
-  toBeAssessedNext: Date
+  toBeAssessedNext: Date,
+  user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
 
 questionAnswerPairSchema.pre('save', function (next) {
   this.toBeAssessedNext = nextAssessmentDate(this.netCorrectAttempts, this.lastAssessed || this.createdAt)
   next()
+})
+
+questionAnswerPairSchema.post('remove', function (qapair) {
+  User.findById(qapair.user)
+    .then((user) => {
+      user.messages.pull(qapair)
+      user.save()
+    })
+    .catch((err) => console.error(err))
 })
 
 /* MADE OBSELETE BY helpers.js.attemptAnswer */
