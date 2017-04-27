@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
-import * as moment from 'moment';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 import { filterToBeAssessed } from "app/helpers";
 
@@ -25,10 +24,7 @@ export class QaPairsComponent implements OnDestroy, OnInit {
     this.qaService.getQAPairs()
       .takeUntil(this.ngUnsubscribe)
       .subscribe((qapairsArr) => {
-        this.qapairs = qapairsArr.map((qapair) => {
-          qapair.toBeAssessedInTime = moment(qapair.toBeAssessedNext).fromNow()
-          return qapair
-        })
+        this.qapairs = qapairsArr
         this.qapairsToBeAssessed = filterToBeAssessed(qapairsArr)
       })
     this.qaService.qapairsChanged
