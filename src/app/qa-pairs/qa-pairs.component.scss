@@ -9,6 +9,8 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row-reverse;
+  padding: 15px 15px 0;
+  flex-wrap: wrap;
 }
 
 .qapairs {
@@ -18,7 +20,7 @@
 }
 
 .questionsToBeReviewedDiv {
-  margin-right: 25px;
+  padding: 20px;
 }
 
 .qapair {
