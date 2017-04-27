@@ -13,6 +13,8 @@ import { QaPairEditorComponent } from './qa-pair-editor/qa-pair-editor.component
 import { AuthService } from "app/auth/auth.service";
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { CanActivateViaAuthGuard } from "app/auth/canActivateViaAuth.guard";
+import { FromNowPipe } from "app/qa-pairs/from-now.pipe";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
     QuizComponent,
     QaPairEditorComponent,
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
+    FromNowPipe
   ],
   imports: [
     BrowserModule,

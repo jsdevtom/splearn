@@ -23,7 +23,7 @@
       <h4>Explanation:</h4>
       <legend>{{ qapair.explanation }}</legend>
     </div>
-    <h4>Due assessment {{qapair.toBeAssessedInTime}}</h4>
+    <h4>Due assessment {{qapair.toBeAssessedNext | fromNow}}</h4>
     <button type="submit" class="pure-button button-warning" (click)="onEdit(qapair)">Edit</button>
     <button type="submit" class="pure-button button-danger" (click)="onDelete(qapair._id)">Delete</button>
   </div>
