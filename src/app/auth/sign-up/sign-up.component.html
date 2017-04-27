@@ -1,4 +1,4 @@
-<form class="pure-form pure-form-stacked" [formGroup]="signupForm" (ngSubmit)="isNew ? doNewQA($event) : updateQA($event)">
+<form class="pure-form pure-form-stacked" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
   <fieldset>
 
     <legend>First Name</legend>
@@ -33,4 +33,11 @@
     (click)="onSubmit()">
     Submit
   </button>
+
+  <div class="altAuthText">Already registered?</div>
+  <button 
+    type="button" 
+    class="pure-button pure-button-primary" 
+    [routerLink]="['/signin']">
+    Sign In</button>
 </form>
