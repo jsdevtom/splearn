@@ -18,7 +18,9 @@
   top: 0;
   right: 0;
   left: 0;
-  width: 90%;
+  box-sizing: border-box;
+  top: 0px;
+  width: 100vw;
   max-width: 560px;
   padding: 20px;
   margin: 20px auto;
