@@ -32,6 +32,7 @@ testem.log
 /typings
 TODO.md
 .env
+test/db.BACK.bson
 
 # e2e
 /e2e/*.js
