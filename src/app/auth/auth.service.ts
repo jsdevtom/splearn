@@ -7,8 +7,15 @@ import { User } from "app/auth/user.model";
 export class AuthService {
   private authUrl = 'user'
   private headers = new Headers({'Content-Type': 'application/json'})
+  public firstName
 
   constructor(private http: Http) { }
+
+  setCredentails (data) {
+    localStorage.setItem('jwt', data.jwt)
+    localStorage.setItem('userId', data.userId)
+    this.firstName = data.firstName
+  }
 
   signUp (user: User) {
     return this.http.post(this.authUrl, user, this.headers)
