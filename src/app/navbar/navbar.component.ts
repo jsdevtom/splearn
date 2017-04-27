@@ -18,11 +18,13 @@ export class NavbarComponent implements OnInit {
   constructor(private qaService: QaPairsService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.qaService.getQAPairstoBeAssessed()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe((qapairsToBeAssessed) => {
-        this.numToBeAssessed = qapairsToBeAssessed.length
-      })
+    if (this.authService.isLoggedIn) {
+      this.qaService.getQAPairstoBeAssessed()
+        .takeUntil(this.ngUnsubscribe)
+        .subscribe((qapairsToBeAssessed) => {
+          this.numToBeAssessed = qapairsToBeAssessed.length
+        })
+    }
     this.qaService.qapairsChanged
       .takeUntil(this.ngUnsubscribe)
       .subscribe((updatedQAPairs) => {
