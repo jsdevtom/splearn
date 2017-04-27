@@ -11,12 +11,12 @@ import { filterToBeAssessed } from "app/helpers";
   styleUrls: ['./qa-pairs.component.scss']
 })
 export class QaPairsComponent implements OnDestroy, OnInit {
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
-  private qapairs = []
-  private qapairsToBeAssessed = []
-  private currentQapair
-  private isEditMode: Boolean
-  private shouldShowNewQAModal: Boolean = false
+  public ngUnsubscribe: Subject<void> = new Subject<void>();
+  public qapairs = []
+  public qapairsToBeAssessed = []
+  public currentQapair
+  public isEditMode: Boolean
+  public shouldShowNewQAModal: Boolean = false
 
   constructor(private qaService: QaPairsService) { }
 

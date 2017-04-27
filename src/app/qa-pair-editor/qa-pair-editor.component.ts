@@ -9,8 +9,8 @@ import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 })
 export class QaPairEditorComponent implements OnInit, AfterViewInit {
   public qaForm: FormGroup
-  private isNew: boolean = true
-  private curScrollTop = document.body.scrollTop
+  public isNew: boolean = true
+  public curScrollTop = document.body.scrollTop
 
   @Output() toggleQAModal: EventEmitter<string> = new EventEmitter<string>()
   @Input () currentQapair
@@ -45,8 +45,7 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
     }
   }
 
-  doNewQA(event) {
-    console.log(event)
+  doNewQA() {
     console.log(this.qaForm.value)
     this.qaService.newQAPair(this.qaForm.value)
       
@@ -54,7 +53,7 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
     this.qaForm.reset()
   }
 
-  updateQA(event) {
+  updateQA() {
     this.qaService.updateQAPair(this.currentQapair._id, this.qaForm.value)
     this.toggleQAModal.emit('toggleQAModal')
     this.qaForm.reset()

@@ -1,7 +1,7 @@
 <div class="newQAModalBackDrop"></div>
 <div class="newQAModal" [ngStyle]="{'top': curScrollTop + 'px'}">
-  <button class="exit exitModal" (click)="toggleNewQAModal($event)">X</button>
-  <form class="pure-form pure-form-stacked" [formGroup]="qaForm" (ngSubmit)="isNew ? doNewQA($event) : updateQA($event)">
+  <button class="exit exitModal" (click)="toggleNewQAModal()">X</button>
+  <form class="pure-form pure-form-stacked" [formGroup]="qaForm" (ngSubmit)="isNew ? doNewQA() : updateQA()">
     <fieldset>
       <legend>{{ isNew ? 'Add': 'Edit' }} a Question</legend>
 
