@@ -13,7 +13,10 @@ router.post('/', function (req, res) {
     password: bcrypt.hashSync(req.body.password, 10)
   })
   user.save()
-    .then((result) => res.status(201).json(result))
+    .then((savedUser) => {
+      let signedJWT = jwt.sign({user: savedUser}, process.env.JWT_SECRET, {expiresIn: '30d'})
+      res.status(201).json({jwt: signedJWT, userId: savedUser._id, firstName: savedUser.firstName})
+    })
     .catch((err) => res.status(500).json(err))
 })
 
