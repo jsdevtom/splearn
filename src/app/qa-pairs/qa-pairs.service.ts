@@ -2,22 +2,24 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers } from "@angular/http";
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import QAPair, { IQAPair } from './qa-pair.model'
 
 @Injectable()
 export class QaPairsService {
-  public qapairs = []
+  public qapairs: QAPair[] = []
   public qapairsToBeAssessed = []
   public qapairsChanged: EventEmitter<any[]> = new EventEmitter()
   private headers = new Headers({'Content-Type': 'application/json'})
   private qapairsUrl = 'api/qapairs'
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {}
   
   getQAPairs () {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
     return this.http.get(this.qapairsUrl + jwt)
       .map(response => {
-        this.qapairs = response.json()
+        this.qapairs = response.json().map((qapair: IQAPair) => new QAPair(qapair))
+        this.qapairsChanged.emit(this.qapairs) // So that the nav bar gets wind of the qapairs, after initializing without being logged in.
         return this.qapairs
       })
   }
@@ -48,8 +50,8 @@ export class QaPairsService {
       .map(response => {
         return response.json()
       })
-      .subscribe((data) => {
-        this.qapairs.push(data)
+      .subscribe((qapair: IQAPair) => {
+        this.qapairs.push(new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs)
       })
   }
@@ -62,6 +64,7 @@ export class QaPairsService {
       })
       .subscribe((data) => {
         this.qapairs.splice(this.qapairs.findIndex((element) => element._id === qapairID), 1, data)
+        this.qapairs.map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs)
       })
   }
@@ -74,6 +77,7 @@ export class QaPairsService {
       })
       .subscribe(() => {
         this.qapairs.splice(this.qapairs.findIndex((element) => element._id === id), 1)
+        this.qapairs.map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs)
       })
   }
@@ -82,7 +86,7 @@ export class QaPairsService {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
     return this.http.post(`${this.qapairsUrl}/is_correct${jwt}`, {id, answer}, this.headers)
       .map(response => {
-        this.qapairs = response.json().qaPairs
+        this.qapairs = response.json().qaPairs.map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs)
         return response.json()
       })
