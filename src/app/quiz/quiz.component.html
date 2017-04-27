@@ -27,9 +27,12 @@
 </div>
 
 <div *ngIf="isFinished">
-  <div>
+  <div *ngIf="answeredQuestions">
     <h1>You scored {{correctAnswerCount}} out of {{numOfQuestionsInQuiz}} ({{ percentageCorrect }}%)</h1>
   </div>
+  <div *ngIf="!answeredQuestions">
+    <h1>There is currently no questions to be reviewed</h1>
+  </div>
   <button [routerLink]="[ '/' ]" type="button" class="pure-button pure-button-primary">Go Home</button>
-  <button (click)="resetQuiz()" type="button" class="pure-button pure-button-primary">Quiz me again</button>
+  <button *ngIf="qapairsToBeAssessed" (click)="resetQuiz()" type="button" class="pure-button pure-button-primary">Quiz me again</button>
 </div>
