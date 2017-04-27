@@ -1,6 +1,11 @@
-import { Component, OnInit, EventEmitter, Output, Input, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, Inject, AfterViewInit, Directive, ContentChildren, QueryList } from '@angular/core';
 import { Validators, FormBuilder, FormArray, FormControl, FormGroup } from "@angular/forms";
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
+import { DOCUMENT } from '@angular/platform-browser';
+
+@Directive({selector: 'textarea'})
+class ChildTextAreaDirective {
+}
 
 @Component({
   selector: 'app-qa-pair-editor',
@@ -10,14 +15,16 @@ import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 export class QaPairEditorComponent implements OnInit, AfterViewInit {
   public qaForm: FormGroup
   public isNew: boolean = true
-  public curScrollTop = document.body.scrollTop
+  public curScrollTop = this.document.body.scrollTop
 
   @Output() toggleQAModal: EventEmitter<string> = new EventEmitter<string>()
   @Input () currentQapair
+  @ContentChildren(ChildTextAreaDirective) textAreas: QueryList<ChildTextAreaDirective>;
 
   constructor(
     private fb: FormBuilder,
-    private qaService: QaPairsService) {
+    private qaService: QaPairsService,
+    @Inject(DOCUMENT) private document: any) {
 
     this.qaForm = this.fb.group({
       question: ['', Validators.required],
@@ -33,7 +40,7 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.autoResizeAll(document.querySelectorAll('textarea'))
+    this.autoResizeAll(this.textAreas)
   }
 
   private initForm () {
@@ -82,11 +89,12 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
   }
 
   autoResize(event: KeyboardEvent) {
-    (<HTMLInputElement>event.target).style.height = 'auto';
-    (<HTMLInputElement>event.target).style.height = ((<HTMLInputElement>event.target).scrollHeight) + 'px'
+    const target = <HTMLInputElement>event.target
+    target.style.height = 'auto';
+    target.style.height = target.scrollHeight + 'px'
   }
 
-  autoResizeAll(inputs: NodeListOf<HTMLTextAreaElement>) {
+  autoResizeAll(inputs: QueryList<ChildTextAreaDirective>) {
     for (let i = 0; i < inputs.length; i++) {
       let input = inputs[i]
       input.style.height = 'auto'
@@ -95,7 +103,7 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
   }
 
   get body () {
-    return document.body
+    return this.document.body
   }
 
   toggleNewQAModal() {
