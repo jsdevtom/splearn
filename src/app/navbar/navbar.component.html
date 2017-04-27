@@ -1,10 +1,14 @@
 <ul class="topnav" id="myTopnav" #myTopnav>
   <li class="currentPage" onclick="myTopnav.classList
   .remove('responsive')"><a [routerLink]="[ '/' ]">BrainBox</a></li>
-  <li onclick="myTopnav.classList
+  <li *ngIf="isLoggedIn" onclick="myTopnav.classList
   .remove('responsive')"><a [routerLink]="[ '/qapairs' ]">Questions</a></li>
-  <li onclick="myTopnav.classList
+  <li *ngIf="isLoggedIn" onclick="myTopnav.classList
   .remove('responsive')"><a [routerLink]="[ '/revise' ]">Revise ({{ numToBeAssessed }})</a></li>
+  <li *ngIf="!isLoggedIn" onclick="myTopnav.classList
+  .remove('responsive')"><a [routerLink]="[ '/signin' ]" [routerLinkActive]="['is-active']">Sign in</a></li>
+  <li *ngIf="!isLoggedIn" onclick="myTopnav.classList
+  .remove('responsive')"><a [routerLink]="[ '/signup' ]" [routerLinkActive]="['is-active']">Sign up</a></li>
   <li *ngIf="isLoggedIn" onclick="myTopnav.classList
   .remove('responsive')" (click)="onLogOut()"><a>Log out</a></li>
   <li class="menuToggle" onclick="myTopnav.classList

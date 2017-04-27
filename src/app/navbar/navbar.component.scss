@@ -43,7 +43,7 @@ ul.topnav {
       transition: 0.3s;
       font-size: 17px;
 
-      &:hover {
+      &:hover, &.is-active {
         background-color: $color_fuscous_gray_approx;
       }
     }
