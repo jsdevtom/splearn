@@ -16,16 +16,17 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^2.3.1",
-    "@angular/compiler": "^2.3.1",
-    "@angular/core": "^2.3.1",
-    "@angular/forms": "^2.3.1",
-    "@angular/http": "^2.3.1",
-    "@angular/platform-browser": "^2.3.1",
-    "@angular/platform-browser-dynamic": "^2.3.1",
-    "@angular/router": "^3.3.1",
+    "@angular/common": "^4.1.0",
+    "@angular/compiler": "^4.1.0",
+    "@angular/core": "^4.1.0",
+    "@angular/forms": "^4.1.0",
+    "@angular/http": "^4.1.0",
+    "@angular/platform-browser": "^4.1.0",
+    "@angular/platform-browser-dynamic": "^4.1.0",
+    "@angular/router": "^4.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
+    "compression": "^1.6.2",
     "concurrently": "^3.4.0",
     "core-js": "^2.4.1",
     "dotenv": "^4.0.0",
@@ -38,11 +39,11 @@
     "purecss": "^0.6.2",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.2"
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "^1.0.1",
-    "@angular/compiler-cli": "^2.3.1",
+    "@angular/compiler-cli": "^4.1.0",
     "@types/jasmine": "2.5.38",
     "@types/moment": "^2.13.0",
     "@types/node": "^6.0.42",
@@ -59,7 +60,7 @@
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
-    "typescript": "~2.0.3"
+    "typescript": "^2.1.5"
   },
   "standard": {
     "ignore": [
