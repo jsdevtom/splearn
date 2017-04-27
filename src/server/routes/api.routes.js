@@ -83,7 +83,7 @@ router.put('/qapairs/:id', function (req, res) {
   let qapair
   User.findById(req.body.decodedUserID)
     .then(foundUser => {
-      qapair = foundUser.qapairs.id(req.body.id)
+      qapair = foundUser.qapairs.id(req.params.id)
       qapair.question = req.body.question
       qapair.correctAnswers = req.body.correctAnswers
       qapair.wrongAnswers = req.body.wrongAnswers
