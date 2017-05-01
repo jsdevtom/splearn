@@ -9,6 +9,7 @@
     "debug": "concurrently \"mongod\" \"ng build -w\" \"devtool src/server/server.js\"",
     "prod": "concurrently \"mongod\" \"ng build -prod\" \"node src/server/server.js\"",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
+    "deploy": "ng build -prod -aot && git add dist -f && git commit -am \"Prepairing for deployment, add dist folder\" && git push live master && git rm --cached dist -r && git commit -am \"Finishing deployment, remove dist folder\"",
     "test": "ng test",
     "test:server": "mocha",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
