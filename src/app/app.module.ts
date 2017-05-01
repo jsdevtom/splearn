@@ -14,6 +14,8 @@ import { AuthService } from "app/auth/auth.service";
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { FromNowPipe } from "app/qa-pairs/from-now.pipe";
+import { AutoResizeDirective } from 'app/qa-pair-editor/auto-resize.directive';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { FromNowPipe } from "app/qa-pairs/from-now.pipe";
     QaPairEditorComponent,
     SignUpComponent,
     SignInComponent,
-    FromNowPipe
+    FromNowPipe,
+    AutoResizeDirective
   ],
   imports: [
     BrowserModule,

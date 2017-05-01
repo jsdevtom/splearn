@@ -1,25 +1,20 @@
-import { Component, OnInit, EventEmitter, Output, Input, Inject, AfterViewInit, Directive, ContentChildren, QueryList } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, Inject, AfterViewInit, QueryList } from '@angular/core';
 import { Validators, FormBuilder, FormArray, FormControl, FormGroup } from "@angular/forms";
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 import { DOCUMENT } from '@angular/platform-browser';
-
-@Directive({selector: 'textarea'})
-class ChildTextAreaDirective {
-}
 
 @Component({
   selector: 'app-qa-pair-editor',
   templateUrl: './qa-pair-editor.component.html',
   styleUrls: ['./qa-pair-editor.component.scss']
 })
-export class QaPairEditorComponent implements OnInit, AfterViewInit {
+export class QaPairEditorComponent implements OnInit {
   public qaForm: FormGroup
   public isNew: boolean = true
   public curScrollTop = this.document.body.scrollTop
 
   @Output() toggleQAModal: EventEmitter<string> = new EventEmitter<string>()
   @Input () currentQapair
-  @ContentChildren(ChildTextAreaDirective) textAreas: QueryList<ChildTextAreaDirective>;
 
   constructor(
     private fb: FormBuilder,
@@ -37,10 +32,6 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.isNew = !this.currentQapair
     this.initForm()
-  }
-
-  ngAfterViewInit() {
-    this.autoResizeAll(this.textAreas)
   }
 
   private initForm () {
@@ -86,20 +77,6 @@ export class QaPairEditorComponent implements OnInit, AfterViewInit {
 
   get wrongAnswers(): FormArray {
     return this.qaForm.get('wrongAnswers') as FormArray
-  }
-
-  autoResize(event: KeyboardEvent) {
-    const target = <HTMLInputElement>event.target
-    target.style.height = 'auto';
-    target.style.height = target.scrollHeight + 'px'
-  }
-
-  autoResizeAll(inputs: QueryList<ChildTextAreaDirective>) {
-    for (let i = 0; i < inputs.length; i++) {
-      let input = inputs[i]
-      input.style.height = 'auto'
-      input.style.height = input.scrollHeight + 'px'
-    }
   }
 
   get body () {
