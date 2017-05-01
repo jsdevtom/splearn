@@ -4,7 +4,7 @@ import { QaPairsComponent } from "app/qa-pairs/qa-pairs.component";
 import { QuizComponent } from "app/quiz/quiz.component";
 import { SignUpComponent } from "app/auth/sign-up/sign-up.component";
 import { SignInComponent } from "app/auth/sign-in/sign-in.component";
-import { CanActivateViaAuthGuard } from "app/auth/canActivateViaAuth.guard";
+import { CanActivateViaAuthGuard, CanViewAuthPages } from "app/auth/canActivateViaAuth.guard";
 
 const routes: Routes = [
   {
@@ -27,18 +27,20 @@ const routes: Routes = [
   {
     path: 'signup',
     component:  SignUpComponent,
-    children: []
+    children: [],
+    canActivate: [CanViewAuthPages]
   },
   {
     path: 'signin',
     component:  SignInComponent,
-    children: []
+    children: [],
+    canActivate: [CanViewAuthPages]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [CanActivateViaAuthGuard]
+  providers: [CanActivateViaAuthGuard, CanViewAuthPages]
 })
 export class AppRoutingModule { }
