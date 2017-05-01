@@ -1,12 +1,16 @@
 @import 'variables';
 
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .container {
-  max-width: $max-width-container;
-  margin: 0 auto;
-  padding: 5px;
-  @media (min-width: 560px) {
-    padding: 15px;
-  }
+    max-width: $max-width-container;
+    margin: 0 auto;
+    padding: 5px;
+    @media (min-width: 560px) {
+        padding: 15px;
+    }
 }
 
 .button-success,
