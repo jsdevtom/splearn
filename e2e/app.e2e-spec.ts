@@ -1,10 +1,10 @@
-import { BrainboxPage } from './app.po';
+import { SplearnPage } from './app.po';
 
-describe('brainbox App', function() {
-  let page: BrainboxPage;
+describe('Splearn App', function() {
+  let page: SplearnPage;
 
   beforeEach(() => {
-    page = new BrainboxPage();
+    page = new SplearnPage();
   });
 
   it('should display message saying app works', () => {
