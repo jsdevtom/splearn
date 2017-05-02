@@ -19,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 
 const { mongoose } = require('./imports')
-mongoose.connect('mongodb://localhost:27017/quiz')
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds127731.mlab.com:27731/splearn`)
 const db = mongoose.connection
 
