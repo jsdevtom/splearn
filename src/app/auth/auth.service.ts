@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http'
 
 import { User } from "app/auth/user.model";
+import { ErrorsService } from "app/errors/errors.service";
+import * as handleError from 'app/errors/handleErrorsInServices'
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class AuthService {
@@ -9,7 +13,7 @@ export class AuthService {
   private headers = new Headers({'Content-Type': 'application/json'})
   public firstName
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private errorsService: ErrorsService) { }
 
   setCredentails (data) {
     localStorage.setItem('jwt', data.jwt)
@@ -18,13 +22,37 @@ export class AuthService {
   }
 
   signUp (user: User) {
-    return this.http.post(this.authUrl, user, this.headers)
+    const response = this.http.post(this.authUrl, user, this.headers)
       .map((response: Response) => response.json())
+    
+    response
+      .subscribe(
+        (data) => {},
+        (error: any): Observable<Error> => {
+          error = error.json()
+          this.errorsService.handleError(error)
+          return Observable.throw(error)
+        }
+      )
+    
+    return response
   }
 
   signIn (user: User) {
-    return this.http.post(`${this.authUrl}/signin`, user, this.headers)
+    const response = this.http.post(`${this.authUrl}/signin`, user, this.headers)
       .map((response: Response) => response.json())
+    
+    response
+      .subscribe(
+        (data) => {},
+        (error: any): Observable<Error> => {
+          error = error.json()
+          this.errorsService.handleError(error)
+          return Observable.throw(error)
+        }
+      )
+
+     return response
   }
 
   logOut () {
