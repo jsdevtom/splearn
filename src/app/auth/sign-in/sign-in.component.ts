@@ -17,12 +17,10 @@ export class SignInComponent implements OnInit {
   onSubmit () {
     const user = new User(this.signinForm.value.email, this.signinForm.value.password)
     this.authService.signIn(user)
-      .subscribe(
-        data => {
-          this.authService.setCredentails(data)
-          this.router.navigateByUrl('/')
-       },
-       error => console.error(error))
+      .subscribe(data => {
+        this.authService.setCredentails(data)
+        this.router.navigateByUrl('/')
+      })
     this.signinForm.reset()
   }
 
