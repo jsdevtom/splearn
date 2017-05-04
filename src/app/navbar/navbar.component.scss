@@ -38,7 +38,7 @@ ul.topnav {
       flex-direction: column;
       color: $concrete;
       text-align: center;
-      padding: 14px 16px;
+      padding: $navbar-link-padding-top 16px;
       text-decoration: none;
       transition: 0.3s;
       font-size: 17px;
