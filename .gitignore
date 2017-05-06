@@ -35,6 +35,7 @@ testem.log
 TODO.md
 .env
 test/db.BACK.bson
+test/user.BACK.json
 
 # e2e
 /e2e/*.js
