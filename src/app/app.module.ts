@@ -17,6 +17,7 @@ import { FromNowPipe } from "app/qa-pairs/from-now.pipe";
 import { AutoResizeDirective } from 'app/qa-pair-editor/auto-resize.directive';
 import { ErrorsComponent } from './errors/errors.component';
 import { ErrorsService } from "app/errors/errors.service";
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ErrorsService } from "app/errors/errors.service";
     SignInComponent,
     FromNowPipe,
     AutoResizeDirective,
-    ErrorsComponent
+    ErrorsComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
