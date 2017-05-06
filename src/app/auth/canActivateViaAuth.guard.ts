@@ -31,7 +31,7 @@ export class CanViewAuthPages implements CanActivate {
     }
     else {
       // start a new navigation to redirect to main page when logged in
-      this.router.navigate(['/'])
+      this.router.navigate(['/qapairs'])
       // abort current navigation
       return false
     }
