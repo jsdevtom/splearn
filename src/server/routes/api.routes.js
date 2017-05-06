@@ -6,7 +6,7 @@ const User = require('../models/user.model')
 
 router.use('/', (req, res, next) => {
   jwt.verify(req.query.jwt, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(401).json({title: 'Not authenticated', error: err})
+    if (err) return res.status(401).json({title: 'Not authenticated', error: 'Not authenticated. Please log in.'})
     req.body.decodedUserID = jwt.decode(req.query.jwt).user
     next()
   })
@@ -16,7 +16,6 @@ router.use('/', (req, res, next) => {
 router.get('/qapairs', function (req, res) {
   User.findById(req.body.decodedUserID)
     .then((foundUser) => {
-      // return Promise.reject('no getting them')
       res.json(foundUser.qapairs)
     })
     .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
@@ -90,7 +89,6 @@ router.put('/qapairs/:id', function (req, res) {
       qapair.wrongAnswers = req.body.wrongAnswers
       qapair.explanation = req.body.explanation
       return foundUser.save()
-      // return Promise.reject(`There was an issue with the update. We're working on it.`)
     })
     .then((updatedUser) => res.status(200).json(qapair))
     .catch((err) => res.status(500).json({title: 'An error occured', error: err}))

@@ -17,7 +17,9 @@ router.post('/', function (req, res) {
       let signedJWT = jwt.sign({user: savedUser}, process.env.JWT_SECRET, {expiresIn: '30d'})
       res.status(201).json({jwt: signedJWT, userId: savedUser._id, firstName: savedUser.firstName})
     })
-    .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
+    .catch(() => {
+      res.status(500).json({title: 'An error occured', error: 'Email already registered'})
+    })
 })
 
 // Sign in
