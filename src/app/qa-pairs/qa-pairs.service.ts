@@ -19,66 +19,56 @@ export class QaPairsService {
   
   getQAPairs () {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    const response = this.http.get(this.qapairsUrl + jwt)
+    
+    return this.http.get(this.qapairsUrl + jwt)
       .map(response => {
         this.qapairs = response.json().map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs) // So that the nav bar gets wind of the qapairs, after initializing without being logged in.
         return this.qapairs
       })
-
-    response
-      .subscribe(
-        (data) => {},
-        (error: any): Observable<Error> => {
+      .catch(
+        (error: any) => {
           error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
       )
-
-    return response
   }
 
   getQAPairstoBeAssessed () {
-    const response = this.getQAPairs()
+    return this.getQAPairs()
       .map(response => {
         let qapairsToBeAssessed = this.qapairs.filter((qapair) => {
           return new Date(qapair.toBeAssessedNext).getTime() < new Date().getTime()
         })
-        //
+
         this.qapairsToBeAssessed.splice(0, this.qapairsToBeAssessed.length)
         this.qapairsToBeAssessed.push.apply(this.qapairsToBeAssessed, qapairsToBeAssessed)
         this.qapairsChanged.emit(this.qapairs)
         return this.qapairsToBeAssessed
       })
-
-    response
-      .subscribe(
-        (data) => {},
-        (error: any): Observable<Error> => {
+      .catch(
+        (error: any) => {
           error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
       )
-    
-    return response
   }
 
   newQAPair (formValue) {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    const response = this.http.post(this.qapairsUrl + jwt, {
-      question: formValue.question,
-      correctAnswers: formValue.correctAnswers,
-      wrongAnswers: formValue.wrongAnswers,
-      explanation: formValue.explanation,
-      createdAt: new Date()
-    }, this.headers)
+
+    return this.http.post(this.qapairsUrl + jwt, {
+        question: formValue.question,
+        correctAnswers: formValue.correctAnswers,
+        wrongAnswers: formValue.wrongAnswers,
+        explanation: formValue.explanation,
+        createdAt: new Date()
+      }, this.headers)
       .map(response => {
         return response.json()
       })
-
-    response
       .subscribe(
         (qapair: IQAPair) => {
           this.qapairs.push(new QAPair(qapair))
@@ -90,18 +80,15 @@ export class QaPairsService {
           return Observable.throw(error)
         }
       )
-    
-    return response
   }
 
   updateQAPair (qapairID: string, formValue) {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    const response = this.http.put(`${this.qapairsUrl}/${qapairID}${jwt}`, formValue)
+
+    return this.http.put(`${this.qapairsUrl}/${qapairID}${jwt}`, formValue)
       .map(response => {
         return response.json()
       })
-    
-    response
       .subscribe(
         (data) => {
           this.qapairs.splice(this.qapairs.findIndex((element) => element._id === qapairID), 1, data)
@@ -114,18 +101,15 @@ export class QaPairsService {
           return Observable.throw(error)
         }
       )
-
-    return response
   }
 
   deleteQAPair (id) {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    const response = this.http.delete(`${this.qapairsUrl}/${id}${jwt}`)
+
+    return this.http.delete(`${this.qapairsUrl}/${id}${jwt}`)
       .map(response => {
         return response.json()
       })
-
-    response
       .subscribe(
         () => {
           this.qapairs.splice(this.qapairs.findIndex((element) => element._id === id), 1)
@@ -138,29 +122,23 @@ export class QaPairsService {
           return Observable.throw(error)
         }
       )
-
-    return response
   }
 
   isCorrectAnswer (id, answer) {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    const response = this.http.post(`${this.qapairsUrl}/is_correct${jwt}`, {id, answer}, this.headers)
+    
+    return this.http.post(`${this.qapairsUrl}/is_correct${jwt}`, {id, answer}, this.headers)
       .map(response => {
         this.qapairs = response.json().qaPairs.map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs)
         return response.json()
       })
-
-    response
-      .subscribe(
-        (data) => {},
-        (error: any): Observable<Error> => {
+      .catch(
+        (error: any)=> {
           error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
       )
-
-    return response
   }
 }

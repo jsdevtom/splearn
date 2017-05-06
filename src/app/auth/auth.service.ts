@@ -3,9 +3,9 @@ import { Http, Headers, Response } from '@angular/http'
 
 import { User } from "app/auth/user.model";
 import { ErrorsService } from "app/errors/errors.service";
-import * as handleError from 'app/errors/handleErrorsInServices'
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AuthService {
@@ -22,16 +22,14 @@ export class AuthService {
   }
 
   signUp (user: User) {
+    console.log('signUp function called from auth.service.ts')
     const response = this.http.post(this.authUrl, user, this.headers)
       .map((response: Response) => response.json())
-    
-    response
-      .subscribe(
-        (data) => {},
-        (error: any): Observable<Error> => {
+      .catch(
+        (error: any) => {
           error = error.json()
           this.errorsService.handleError(error)
-          return Observable.throw(error)
+          throw Observable.throw(error)
         }
       )
     
@@ -39,20 +37,15 @@ export class AuthService {
   }
 
   signIn (user: User) {
-    const response = this.http.post(`${this.authUrl}/signin`, user, this.headers)
+   return this.http.post(`${this.authUrl}/signin`, user, this.headers)
       .map((response: Response) => response.json())
-    
-    response
-      .subscribe(
-        (data) => {},
-        (error: any): Observable<Error> => {
+      .catch(
+        (error: any) => {
           error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
       )
-
-     return response
   }
 
   logOut () {
