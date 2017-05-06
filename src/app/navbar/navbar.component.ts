@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostBinding, Renderer2, ElementRef } from '@angular/core';
 import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/filter';
 import { Subject } from 'rxjs/Subject';
 import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
 import { filterToBeAssessed } from "../helpers"
 import { AuthService } from "app/auth/auth.service";
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -14,8 +15,14 @@ import { Router } from "@angular/router";
 export class NavbarComponent implements OnInit {
   private ngUnsubscribe: Subject<void> = new Subject<void>()
   private numToBeAssessed: number
+  private hoverBackgroundColor: boolean = true
 
-  constructor(private qaService: QaPairsService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private qaService: QaPairsService,
+    private authService: AuthService, 
+    private router: Router,
+    private elRef: ElementRef,
+    private renderer: Renderer2) { }
 
   ngOnInit() {
     if (this.authService.isLoggedIn) {
@@ -25,11 +32,31 @@ export class NavbarComponent implements OnInit {
           this.numToBeAssessed = qapairsToBeAssessed.length
         })
     }
+
     this.qaService.qapairsChanged
       .takeUntil(this.ngUnsubscribe)
       .subscribe((updatedQAPairs) => {
         this.numToBeAssessed = filterToBeAssessed(updatedQAPairs).length
       })
+
+    this.router.events
+      .takeUntil(this.ngUnsubscribe)
+      .filter(event => event instanceof NavigationEnd)
+      .subscribe((event: NavigationEnd) => {
+        this.updateStyle(event.url)
+      })
+  }
+
+  updateStyle (url: string) {
+    if (url === '/') {
+      this.renderer.setStyle(this.elRef.nativeElement, 'backgroundColor', 'transparent')
+      this.renderer.setStyle(this.elRef.nativeElement, 'color', 'inherit')
+      this.hoverBackgroundColor = false
+    } else {
+      this.renderer.removeStyle(this.elRef.nativeElement, 'backgroundColor')
+      this.renderer.removeStyle(this.elRef.nativeElement, 'color')
+      this.hoverBackgroundColor = true
+    }
   }
 
   onLogOut () {
