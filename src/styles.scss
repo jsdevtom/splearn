@@ -8,9 +8,11 @@ body {
 .container {
     max-width: $max-width-container;
     margin: 0 auto;
-    padding: 5px;
-    @media (min-width: 560px) {
-        padding: 15px;
+    padding: $container-padding-small;
+    padding-bottom: 0;
+    @media (min-width: $container-break-point) {
+        padding: $container-padding-large;
+        padding-bottom: 0;
     }
 }
 
