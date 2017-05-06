@@ -1,4 +1,25 @@
+.flexCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.centerText {
+  text-align: center;
+}
+
+.inputButtonWrap {
+  max-width: 550px;
+  * {
+    width: 100%;
+  }
+  button {
+    margin-top: 12px;
+  }
+}
+
 legend {
+  width: auto;
   white-space: pre-wrap;
 }
 
