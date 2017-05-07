@@ -7,8 +7,10 @@ export class ServerError {
   ) {
     if (typeof errorMessage === 'string') {
       this.errorMessage = errorMessage
-    } else {
+    } else if (typeof errorMessage === 'object') {
       this.errorMessage = errorMessage.errorMessage
+    } else {
+      this.errorMessage = 'There was an error.'
     }
   }
 }
