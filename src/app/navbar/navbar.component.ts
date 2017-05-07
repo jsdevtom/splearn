@@ -15,7 +15,7 @@ import { Router, NavigationEnd } from "@angular/router";
 export class NavbarComponent implements OnInit {
   private ngUnsubscribe: Subject<void> = new Subject<void>()
   private numToBeAssessed: number
-  private hoverBackgroundColor: boolean = true
+  public hoverBackgroundColor: boolean = true
 
   constructor(
     private qaService: QaPairsService,
