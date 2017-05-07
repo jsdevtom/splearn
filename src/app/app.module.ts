@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -18,6 +19,7 @@ import { AutoResizeDirective } from 'app/qa-pair-editor/auto-resize.directive';
 import { ErrorsComponent } from './errors/errors.component';
 import { ErrorsService } from "app/errors/errors.service";
 import { LandingComponent } from './landing/landing.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -32,13 +34,15 @@ import { LandingComponent } from './landing/landing.component';
     FromNowPipe,
     AutoResizeDirective,
     ErrorsComponent,
-    LandingComponent
+    LandingComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     QaPairsService,
