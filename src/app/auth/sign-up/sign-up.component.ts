@@ -19,7 +19,9 @@ export class SignUpComponent implements OnInit {
     this.authService.signUp(user)
       .subscribe(data => {
         this.authService.setCredentails(data)
-        this.router.navigateByUrl('/')
+        /* Forces the auth guard to be fired again, redirecting user based on their login status*/
+        this.router.navigateByUrl('/signing-in')
+          .then(() => this.router.navigateByUrl('/'))
       })
     this.signupForm.reset()
   }
