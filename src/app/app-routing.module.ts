@@ -5,12 +5,15 @@ import { QuizComponent } from "app/quiz/quiz.component";
 import { SignUpComponent } from "app/auth/sign-up/sign-up.component";
 import { SignInComponent } from "app/auth/sign-in/sign-in.component";
 import { CanActivateViaAuthGuard, CanViewAuthPages } from "app/auth/canActivateViaAuth.guard";
+import { LandingComponent } from "app/landing/landing.component";
+import { NotFoundComponent } from "app/not-found/not-found.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/qapairs' ,
-    pathMatch: 'full'
+    component:  LandingComponent,
+    pathMatch: 'full',
+    canActivate: [CanViewAuthPages]
   },
   {
     path: 'qapairs',
@@ -35,6 +38,10 @@ const routes: Routes = [
     component:  SignInComponent,
     children: [],
     canActivate: [CanViewAuthPages]
+  },
+  {
+    path: '**',
+    component:  NotFoundComponent
   }
 ];
 

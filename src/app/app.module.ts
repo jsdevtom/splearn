@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -15,6 +16,10 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { FromNowPipe } from "app/qa-pairs/from-now.pipe";
 import { AutoResizeDirective } from 'app/qa-pair-editor/auto-resize.directive';
+import { ErrorsComponent } from './errors/errors.component';
+import { ErrorsService } from "app/errors/errors.service";
+import { LandingComponent } from './landing/landing.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -27,18 +32,23 @@ import { AutoResizeDirective } from 'app/qa-pair-editor/auto-resize.directive';
     SignUpComponent,
     SignInComponent,
     FromNowPipe,
-    AutoResizeDirective
+    AutoResizeDirective,
+    ErrorsComponent,
+    LandingComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     QaPairsService,
     { provide: 'Body',  useValue: document.body },
-    AuthService
+    AuthService,
+    ErrorsService
   ],
   bootstrap: [AppComponent]
 })

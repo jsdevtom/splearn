@@ -17,12 +17,12 @@ export class SignUpComponent implements OnInit {
   onSubmit () {
     const user = new User(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.firstName)
     this.authService.signUp(user)
-      .subscribe(
-        data => {
-          this.authService.setCredentails(data)
-          this.router.navigateByUrl('/')
-        },
-        error => console.error(error))
+      .subscribe(data => {
+        this.authService.setCredentails(data)
+        /* Forces the auth guard to be fired again, redirecting user based on their login status*/
+        this.router.navigateByUrl('/signing-in')
+          .then(() => this.router.navigateByUrl('/'))
+      })
     this.signupForm.reset()
   }
 

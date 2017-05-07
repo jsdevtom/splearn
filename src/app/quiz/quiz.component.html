@@ -1,6 +1,6 @@
 <div *ngIf="!isFinished">
-  <div>Question {{ questionIndex + 1 }} of {{ numOfQuestionsInQuiz }}</div>
-  <div *ngIf="answeredQuestions > 0">Percentage correct so far: {{ percentageCorrect }}%</div>
+  <h2 class="centerText">Question {{ questionIndex + 1 }} of {{ numOfQuestionsInQuiz }}</h2>
+  <div class="centerText" *ngIf="answeredQuestions > 0">Percentage correct so far: {{ percentageCorrect }}%</div>
   
   <form 
     class="pure-form" 
@@ -8,14 +8,18 @@
     (ngSubmit)="onSubmitAnswer($event)"
     *ngIf="!showFeedbackScreen">
     <fieldset>
-      <legend>{{ currentQAPair?.question }}</legend>
-  
-      <input type="text" name="answer" formControlName="answer" autocomplete="off">
-      <button type="submit" class="pure-button pure-button-primary">Submit</button>
+      <div class="flexCenter">
+        <legend>{{ currentQAPair?.question }}</legend>
+          
+        <div class="inputButtonWrap">
+          <input type="text" name="answer" formControlName="answer" autocomplete="off">
+          <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+      </div>
     </fieldset>
   </form>
 
-  <div *ngIf="showFeedbackScreen">
+  <div class="flexCenter" *ngIf="showFeedbackScreen">
     <h2>{{resultMessage}}</h2>
     <div class="correctAnswersContainer">
       <h4>Correct answers:</h4>

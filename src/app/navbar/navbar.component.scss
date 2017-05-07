@@ -5,7 +5,8 @@ $em-logo: 1.4em;
 
 :host {
   background-color: $color_mine_shaft_approx;
-  display: block
+  display: block;
+  color: $concrete;
 }
 
 ul.topnav {
@@ -36,14 +37,14 @@ ul.topnav {
       display: flex;
       justify-content: center;
       flex-direction: column;
-      color: $concrete;
+      color: inherit;
       text-align: center;
-      padding: 14px 16px;
+      padding: $navbar-link-padding-top 16px;
       text-decoration: none;
       transition: 0.3s;
       font-size: 17px;
 
-      &:hover, &.is-active {
+      &.hoverBackGround:hover, &.hoverBackGround.is-active {
         background-color: $color_fuscous_gray_approx;
       }
     }

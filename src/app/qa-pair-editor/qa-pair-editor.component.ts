@@ -44,7 +44,6 @@ export class QaPairEditorComponent implements OnInit {
   }
 
   doNewQA() {
-    console.log(this.qaForm.value)
     this.qaService.newQAPair(this.qaForm.value)
       
     this.toggleQAModal.emit('toggleQAModal')

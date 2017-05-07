@@ -1,0 +1,46 @@
+@import 'variables';
+
+:host {
+  display: flex;
+}
+
+div {
+  box-sizing: border-box;
+  position: fixed;
+  // // Calc where the bottom of the navbar is
+  // top: calc($navbar-link-padding-top * 4);
+  display: flex;
+  background-color: #e70000;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  padding: 6px;
+  width: 100%;
+  color: white;
+}
+
+.infoIcon {
+  margin-left: 5px;
+}
+
+.exitButton {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  outline: none;
+  position: absolute;
+  right: 5px;
+  height: 80%;
+}
+
+.exitIcon {
+  margin-top: -2px;
+}
+
+span.message {
+  flex-basis: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
