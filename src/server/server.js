@@ -19,7 +19,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 
 const { mongoose } = require('./imports')
-mongoose.connect('mongodb://localhost:27017/quiz')
+
+if (process.env.NODE_ENV !== 'production') {
+  mongoose.connect('mongodb://localhost:27017/quiz')
+} else {
+  mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds127731.mlab.com:27731/splearn`)
+}
+
 const db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'connection error:'))
