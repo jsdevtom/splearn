@@ -57,6 +57,7 @@ button {
 
 section {
   width: calc(100% + #{$container-padding-small * 2});
+  overflow-x: hidden;
   padding: 15px;
   box-sizing: border-box;
   &:nth-of-type(odd) {
