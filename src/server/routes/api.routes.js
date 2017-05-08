@@ -5,9 +5,10 @@ const { levenshtein, attemptAnswer } = require('../helpers')
 const User = require('../models/user.model')
 
 router.use('/', (req, res, next) => {
-  jwt.verify(req.query.jwt, process.env.JWT_SECRET, (err, decoded) => {
+  console.log(req.headers.jwt)
+  jwt.verify(req.headers.jwt, process.env.JWT_SECRET, (err, decoded) => {
     if (err) return res.status(401).json({title: 'Not authenticated', error: 'Not authenticated. Please log in.'})
-    req.body.decodedUserID = jwt.decode(req.query.jwt).user
+    req.body.decodedUserID = jwt.decode(req.headers.jwt).user
     next()
   })
 })
