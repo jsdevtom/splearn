@@ -5,15 +5,16 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"mongod\" \"ng build -w\" \"nodemon src/server/server.js\"",
     "debug": "concurrently \"mongod\" \"ng build -w\" \"devtool src/server/server.js\"",
     "prod": "concurrently \"mongod\" \"ng build -prod\" \"node src/server/server.js\"",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "deploy": "echo \"Are you sure you are on the 'deploy' branch (y/n)\" && read input_variable && if echo \"$input_variable\" | grep -iq \"^n\"; then return; fi && ng build -prod -aot &&  git add dist -f && git commit -am \"Prepairing for deployment, add dist folder\" && git push live deploy:master && git rm --cached dist -r && git commit -am \"Finishing deployment, remove dist folder\"",
-    "test": "ng test",
-    "test:server": "mocha",
-    "pree2e": "webdriver-manager update --standalone false --gecko false",
-    "e2e": "protractor"
+    "build": "webpack",
+    "start": "webpack-dev-server --port=4200",
+    "test": "karma start ./karma.conf.js",
+    "prepree2e": "npm start",
+    "pree2e": "webdriver-manager update --standalone false --gecko false --quiet",
+    "e2e": "protractor ./protractor.conf.js"
   },
   "private": true,
   "dependencies": {
@@ -63,7 +64,26 @@
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
-    "typescript": "^2.1.5"
+    "typescript": "^2.1.5",
+    "webpack-dev-server": "~2.4.2",
+    "autoprefixer": "^6.5.3",
+    "css-loader": "^0.27.3",
+    "cssnano": "^3.10.0",
+    "exports-loader": "^0.6.3",
+    "file-loader": "^0.10.0",
+    "json-loader": "^0.5.4",
+    "karma-sourcemap-loader": "^0.3.7",
+    "less-loader": "^4.0.2",
+    "postcss-loader": "^1.3.3",
+    "postcss-url": "^5.1.2",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.3",
+    "script-loader": "^0.7.0",
+    "source-map-loader": "^0.1.5",
+    "istanbul-instrumenter-loader": "^2.0.0",
+    "style-loader": "^0.13.1",
+    "stylus-loader": "^3.0.1",
+    "url-loader": "^0.5.7"
   },
   "standard": {
     "ignore": [
