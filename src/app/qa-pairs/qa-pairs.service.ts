@@ -14,12 +14,16 @@ export class QaPairsService {
   public qapairsChanged: EventEmitter<any[]> = new EventEmitter()
   private requestOptions = new RequestOptions(
     {
-      headers: new Headers({'Content-Type': 'application/json', jwt: localStorage.getItem('jwt') || ''})
+      headers: new Headers({'Content-Type': 'application/json', jwt: this.jwtInLS})
     }
   )
   private qapairsUrl = 'api/qapairs'
 
   constructor(private http: Http, private errorsService: ErrorsService) {}
+
+  get jwtInLS () {
+    return localStorage.getItem('jwt') || ''
+  }
   
   getQAPairs () {    
     return this.http.get(this.qapairsUrl, this.requestOptions)

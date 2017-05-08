@@ -12,13 +12,17 @@ export class AuthService {
   private authUrl = 'user'
   private requestOptions = new RequestOptions(
     {
-      headers: new Headers({'Content-Type': 'application/json', jwt: localStorage.getItem('jwt') || ''})
+      headers: new Headers({'Content-Type': 'application/json', jwt: this.jwtInLS})
     }
   )
 
   public firstName
 
   constructor(private http: Http, private errorsService: ErrorsService) { }
+
+  get jwtInLS () {
+    return localStorage.getItem('jwt') || ''
+  }
 
   setCredentails (data) {
     localStorage.setItem('jwt', data.jwt)
