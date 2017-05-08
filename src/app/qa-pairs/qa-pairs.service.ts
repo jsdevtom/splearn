@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers } from "@angular/http";
+import { Http, Headers, RequestOptions } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -12,7 +12,7 @@ export class QaPairsService {
   public qapairs: QAPair[] = []
   public qapairsToBeAssessed = []
   public qapairsChanged: EventEmitter<any[]> = new EventEmitter()
-  private headers = new Headers({'Content-Type': 'application/json'})
+  private headers = new Headers({'Content-Type': 'application/json', jwt: localStorage.getItem('jwt') || ''})
   private qapairsUrl = 'api/qapairs'
 
   constructor(private http: Http, private errorsService: ErrorsService) {}
@@ -20,7 +20,7 @@ export class QaPairsService {
   getQAPairs () {
     const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
     
-    return this.http.get(this.qapairsUrl + jwt)
+    return this.http.get(this.qapairsUrl, new RequestOptions({headers: this.headers}))
       .map(response => {
         this.qapairs = response.json().map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs) // So that the nav bar gets wind of the qapairs, after initializing without being logged in.
