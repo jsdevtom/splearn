@@ -10,19 +10,21 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class AuthService {
   private authUrl = 'user'
-  private requestOptions = new RequestOptions(
-    {
-      headers: new Headers({'Content-Type': 'application/json', jwt: this.jwtInLS})
-    }
-  )
-
   public firstName
 
-  constructor(private http: Http, private errorsService: ErrorsService) { }
-
+  get requestOptions () {
+    return new RequestOptions(
+      {
+        headers: new Headers({'Content-Type': 'application/json', jwt: this.jwtInLS})
+      }
+    )
+  }
+  
   get jwtInLS () {
     return localStorage.getItem('jwt') || ''
   }
+
+  constructor(private http: Http, private errorsService: ErrorsService) { }
 
   setCredentails (data) {
     localStorage.setItem('jwt', data.jwt)
