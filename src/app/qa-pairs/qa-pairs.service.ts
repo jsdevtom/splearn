@@ -12,15 +12,17 @@ export class QaPairsService {
   public qapairs: QAPair[] = []
   public qapairsToBeAssessed = []
   public qapairsChanged: EventEmitter<any[]> = new EventEmitter()
-  private headers = new Headers({'Content-Type': 'application/json', jwt: localStorage.getItem('jwt') || ''})
+  private requestOptions = new RequestOptions(
+    {
+      headers: new Headers({'Content-Type': 'application/json', jwt: localStorage.getItem('jwt') || ''})
+    }
+  )
   private qapairsUrl = 'api/qapairs'
 
   constructor(private http: Http, private errorsService: ErrorsService) {}
   
-  getQAPairs () {
-    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    
-    return this.http.get(this.qapairsUrl, new RequestOptions({headers: this.headers}))
+  getQAPairs () {    
+    return this.http.get(this.qapairsUrl, this.requestOptions)
       .map(response => {
         this.qapairs = response.json().map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs) // So that the nav bar gets wind of the qapairs, after initializing without being logged in.
@@ -57,15 +59,13 @@ export class QaPairsService {
   }
 
   newQAPair (formValue) {
-    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-
-    return this.http.post(this.qapairsUrl + jwt, {
+    return this.http.post(this.qapairsUrl, {
         question: formValue.question,
         correctAnswers: formValue.correctAnswers,
         wrongAnswers: formValue.wrongAnswers,
         explanation: formValue.explanation,
         createdAt: new Date()
-      }, this.headers)
+      }, this.requestOptions)
       .map(response => {
         return response.json()
       })
@@ -83,9 +83,7 @@ export class QaPairsService {
   }
 
   updateQAPair (qapairID: string, formValue) {
-    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-
-    return this.http.put(`${this.qapairsUrl}/${qapairID}${jwt}`, formValue)
+    return this.http.put(`${this.qapairsUrl}/${qapairID}`, formValue, this.requestOptions)
       .map(response => {
         return response.json()
       })
@@ -104,9 +102,7 @@ export class QaPairsService {
   }
 
   deleteQAPair (id) {
-    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-
-    return this.http.delete(`${this.qapairsUrl}/${id}${jwt}`)
+    return this.http.delete(`${this.qapairsUrl}/${id}`)
       .map(response => {
         return response.json()
       })
@@ -125,9 +121,7 @@ export class QaPairsService {
   }
 
   isCorrectAnswer (id, answer) {
-    const jwt = localStorage.getItem('jwt') ? `?jwt=${localStorage.getItem('jwt')}` : ''
-    
-    return this.http.post(`${this.qapairsUrl}/is_correct${jwt}`, {id, answer}, this.headers)
+    return this.http.post(`${this.qapairsUrl}/is_correct`, {id, answer}, this.requestOptions)
       .map(response => {
         this.qapairs = response.json().qaPairs.map((qapair: IQAPair) => new QAPair(qapair))
         this.qapairsChanged.emit(this.qapairs)

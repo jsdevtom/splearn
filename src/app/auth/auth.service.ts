@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http'
+import { Http, Headers, Response, RequestOptions } from '@angular/http'
 
 import { User } from "app/auth/user.model";
 import { ErrorsService } from "app/errors/errors.service";
@@ -10,7 +10,12 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class AuthService {
   private authUrl = 'user'
-  private headers = new Headers({'Content-Type': 'application/json'})
+  private requestOptions = new RequestOptions(
+    {
+      headers: new Headers({'Content-Type': 'application/json', jwt: localStorage.getItem('jwt') || ''})
+    }
+  )
+
   public firstName
 
   constructor(private http: Http, private errorsService: ErrorsService) { }
@@ -23,7 +28,7 @@ export class AuthService {
 
   signUp (user: User) {
     console.log('signUp function called from auth.service.ts')
-    const response = this.http.post(this.authUrl, user, this.headers)
+    const response = this.http.post(this.authUrl, user, this.requestOptions)
       .map((response: Response) => response.json())
       .catch(
         (error: any) => {
@@ -37,7 +42,7 @@ export class AuthService {
   }
 
   signIn (user: User) {
-   return this.http.post(`${this.authUrl}/signin`, user, this.headers)
+   return this.http.post(`${this.authUrl}/signin`, user, this.requestOptions)
       .map((response: Response) => response.json())
       .catch(
         (error: any) => {
