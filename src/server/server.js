@@ -8,7 +8,7 @@ const apiRoutes = require('./routes/api.routes')
 const userRoutes = require('./routes/user.routes')
 
 const app = express()
-app.set('port', (process.env.PORT || 3000))
+app.set('port', (process.env.PORT || 3001))
 app.use(require('helmet')())
 app.use(require('compression')({ threshold: 0 }))
 app.use('/', express.static(path.join(__dirname, '/../../dist'), { maxAge: 86400000 }))
