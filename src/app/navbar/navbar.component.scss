@@ -25,6 +25,12 @@ ul.topnav {
       display: flex;
     }
 
+    &.menuToggle {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
     &.currentPage {
       margin-right: auto;
 
@@ -62,11 +68,6 @@ ul.topnav {
     li {
       display: flex;
 
-      &.menuToggle {
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
 
       a {
         text-align: left;
