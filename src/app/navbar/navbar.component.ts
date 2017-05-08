@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
   private ngUnsubscribe: Subject<void> = new Subject<void>()
   private numToBeAssessed: number
   public hoverBackgroundColor: boolean = true
+  public svgFill: string
 
   constructor(
     private qaService: QaPairsService,
@@ -51,10 +52,12 @@ export class NavbarComponent implements OnInit {
     if (url === '/') {
       this.renderer.setStyle(this.elRef.nativeElement, 'backgroundColor', 'transparent')
       this.renderer.setStyle(this.elRef.nativeElement, 'color', 'inherit')
+      this.svgFill = '#000'
       this.hoverBackgroundColor = false
     } else {
       this.renderer.removeStyle(this.elRef.nativeElement, 'backgroundColor')
       this.renderer.removeStyle(this.elRef.nativeElement, 'color')
+      this.svgFill = '#fff'
       this.hoverBackgroundColor = true
     }
   }
