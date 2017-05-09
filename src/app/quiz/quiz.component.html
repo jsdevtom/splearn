@@ -12,7 +12,7 @@
         <legend>{{ currentQAPair?.question }}</legend>
           
         <div class="inputButtonWrap">
-          <input type="text" name="answer" formControlName="answer" autocomplete="off">
+          <input type="text" name="answer" formControlName="answer" autocomplete="off" #answerInput autoFocusDirective>
           <button type="submit" class="pure-button pure-button-primary">Submit</button>
         </div>
       </div>
@@ -26,7 +26,7 @@
       <div class="answer correct" *ngFor="let correctAnswer of currentQAPair.correctAnswers">{{correctAnswer}}</div>
     </div>
     <legend>{{ currentQAPair?.explanation }}</legend>
-    <button type="button" class="pure-button pure-button-primary" (click)="hideFeedbackScreen()">Continue</button>
+    <button type="button" class="pure-button pure-button-primary" (click)="hideFeedbackScreen()" autoFocusDirective>Continue</button>
   </div>
 </div>
 
@@ -37,6 +37,6 @@
   <div *ngIf="!answeredQuestions">
     <h1>There is currently no questions to be reviewed</h1>
   </div>
-  <button [routerLink]="[ '/' ]" type="button" class="pure-button pure-button-primary">Go Home</button>
+  <button [routerLink]="[ '/' ]" type="button" class="pure-button pure-button-primary" autoFocusDirective>Go Home</button>
   <button *ngIf="qapairsToBeAssessed" (click)="resetQuiz()" type="button" class="pure-button pure-button-primary">Quiz me again</button>
 </div>

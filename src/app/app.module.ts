@@ -20,6 +20,7 @@ import { ErrorsComponent } from './errors/errors.component';
 import { ErrorsService } from "app/errors/errors.service";
 import { LandingComponent } from './landing/landing.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AutoFocusDirective } from "app/autoFocus.directive";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AutoResizeDirective,
     ErrorsComponent,
     LandingComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AutoFocusDirective
   ],
   imports: [
     BrowserModule,
