@@ -71,8 +71,8 @@ router.post('/qapairs/is_correct', function (req, res) {
           !wrongAnswers.includes(req.body.answer)) {
           return onDeterminedIfCorrect(true)
         }
-        return onDeterminedIfCorrect(false)
       }
+      return onDeterminedIfCorrect(false)
     })
     .then((updatedUser) => res.status(200).json({ qaPairs: updatedUser.qapairs, isCorrect }))
     .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
