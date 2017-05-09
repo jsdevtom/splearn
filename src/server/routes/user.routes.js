@@ -14,7 +14,7 @@ router.post('/', function (req, res) {
   })
   user.save()
     .then((savedUser) => {
-      let signedJWT = jwt.sign({user: savedUser}, process.env.JWT_SECRET, {expiresIn: '30d'})
+      let signedJWT = jwt.sign({userID: savedUser.id}, process.env.JWT_SECRET, {expiresIn: '30d'})
       res.status(201).json({jwt: signedJWT, userId: savedUser._id, firstName: savedUser.firstName})
     })
     .catch(() => {
@@ -35,7 +35,7 @@ router.post('/signin', function (req, res) {
         statusCode = 401
         return reject('Login Failed')
       }
-      signedJWT = jwt.sign({user: userFound}, process.env.JWT_SECRET, {expiresIn: '30d'})
+      signedJWT = jwt.sign({userID: userFound.id}, process.env.JWT_SECRET, {expiresIn: '30d'})
       resolve({jwt: signedJWT, userId: userFound._id, firstName: userFound.firstName})
     }))
     .then((objToBeSent) => {
