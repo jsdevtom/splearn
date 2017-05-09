@@ -7,7 +7,7 @@ const User = require('../models/user.model')
 router.use('/', (req, res, next) => {
   jwt.verify(req.headers.jwt, process.env.JWT_SECRET, (err, decoded) => {
     if (err) return res.status(401).json({title: 'Not authenticated', error: 'Not authenticated. Please log in.'})
-    req.body.decodedUserID = jwt.decode(req.headers.jwt).user
+    req.body.decodedUserID = jwt.decode(req.headers.jwt).userID
     next()
   })
 })
