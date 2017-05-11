@@ -73,7 +73,7 @@ export class QuizComponent implements OnDestroy, OnInit {
   }
 
   get isFinished (): Boolean {
-    return !(this.answeredQuestions < this.numOfQuestionsInQuiz)
+    return !(this.answeredQuestions < this.numOfQuestionsInQuiz) && !this.showFeedbackScreen
   }
 
   ngOnDestroy(): void {
