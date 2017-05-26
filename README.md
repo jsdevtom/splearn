@@ -1,9 +1,11 @@
 # Splearn
 
+Splearn was created because I need it in order to learn new technologies with the highest possible efficiency. You can find a live, working, completely free online version [here](https://splearn.jsdevtom.com).
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 
 ## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a fullstack dev server. Navigate to `http://localhost:3001/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -16,6 +18,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+Run `npm run test:server` to execute the backend tests via [Mocha](https://mochajs.org/).
 
 ## Running end-to-end tests
 
