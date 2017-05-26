@@ -4,6 +4,12 @@ Splearn was created because I need it in order to learn new technologies with th
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 
+## Getting Started
+
+  1. `git clone https://github.com/jsdevtom/splearn.git` # Clone the directory
+  2. `npm install` # Install the dependencies
+  3. `npm start` # Start the development server, listening `http://localhost:3001/`                                                                        
+
 ## Development server
 Run `npm start` for a fullstack dev server. Navigate to `http://localhost:3001/`. The app will automatically reload if you change any of the source files.
 
