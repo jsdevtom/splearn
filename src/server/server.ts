@@ -24,12 +24,12 @@ logger.info('Server running', { context: 'server.ts' })
 db.on('error', handleMongoError)
 
 db.once('open', () => {
-  console.log('Connected to MongoDB')
+  logger.info('Connected to MongoDB', {context: 'server.ts'})
 
   assignRoutesToApp(app)
 
   app.listen(app.get('port'), () => {
-    console.log(`Splearn server listening on port ${app.get('port')}`)
+    logger.info(`Splearn server listening on port ${app.get('port')}`, {context: 'server.ts'})
   })
 })
 

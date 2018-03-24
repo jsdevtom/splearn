@@ -1,3 +1,5 @@
+import {logger} from '../logger/logger'
+
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
@@ -17,7 +19,8 @@ router.post('/', function (req, res) {
       let signedJWT = jwt.sign({ userID: savedUser.id }, process.env.JWT_SECRET, { expiresIn: '30d' })
       res.status(201).json({ jwt: signedJWT, userId: savedUser._id, firstName: savedUser.firstName })
     })
-    .catch(() => {
+    .catch(err => {
+      logger.error(`could not sign user up ${err}`, {context: __filename})
       res.status(500).json({ title: 'An error occured', error: 'Email already registered' })
     })
 })
@@ -41,7 +44,8 @@ router.post('/signin', function (req, res) {
     .then((objToBeSent) => {
       res.status(200).json(objToBeSent)
     })
-    .catch((err) => {
+    .catch(err => {
+      logger.error(`could not sign user in ${err}`, {context: __filename})
       res.status(statusCode || 500).json({ title: 'An error occured', error: err })
     })
 })

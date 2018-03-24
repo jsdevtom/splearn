@@ -1,19 +1,20 @@
 import { LoggerInstance } from 'winston'
-import { LogConfig } from './LogConfig'
-const { createLogger, format, transports } = require('winston')
-const { combine, timestamp, label, printf } = format
+import { LogConfig } from './log-config.interface'
+const { createLogger, format, transports, config } = require('winston')
+const { combine, timestamp, printf, colorize } = format
 
-const standardFormat = printf((info: LogConfig) => {
-  return `${info.timestamp} [${info.context}] ${info.level}: ${info.message}`
-})
+const standardFormat = combine(
+  colorize(),
+  timestamp(),
+  printf((info: LogConfig) => {
+    return `${info.timestamp} [${info.context}] ${info.level}: ${info.message}`
+  })
+)
+
 
 const logger: LoggerInstance = createLogger({
-  level: 'info',
-  format: combine(
-      label({ label: 'right meow!' }),
-      timestamp(),
-      standardFormat
-  ),
+  levels: config.npm.levels,
+  format: standardFormat,
   transports: [
     new transports.File({ filename: 'error.log', level: 'error' }),
     new transports.File({ filename: 'combined.log' })
@@ -21,9 +22,7 @@ const logger: LoggerInstance = createLogger({
 })
 
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new transports.Console({
-    format: standardFormat
-  }))
+  logger.add(new transports.Console())
 }
 
 export { logger }
