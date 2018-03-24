@@ -2,7 +2,7 @@ import * as winston from 'winston'
 import * as mongoose from 'mongoose'
 import * as compression from 'compression'
 import * as helmet from 'helmet'
-import { config } from 'dotenv'
+import {config} from 'dotenv'
 import * as bodyParser from 'body-parser'
 import * as express from 'express'
 import * as path from 'path'
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const db = mongoose.connection
 
-winston.info('starting server')
+logger.info('Server running', { context: 'server.ts' })
 
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
