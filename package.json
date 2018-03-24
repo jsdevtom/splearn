@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"mongod\" \"ng build -w\" \"nodemon\"",
-    "debug": "concurrently \"mongod\" \"ng build -w\" \"nodemon --inspect-brk\"",
+    "debug": "concurrently \"mongod\" \"ng build -w\" \"npm run build:server && node --inspect-brk dist/server/server.js\"",
     "prod": "npm run build:server && concurrently \"mongod\" \"ng build -prod\" \"node dist/server/server.js\"",
     "build:server": "tsc --project src/server/tsconfig.json",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json && tslint --project src/server/tsconfig.json -c ./tslint.json",
@@ -67,7 +67,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
     "mocha": "^3.2.0",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.17.2",
     "protractor": "~4.0.13",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
