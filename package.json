@@ -6,8 +6,9 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"mongod\" \"ng build -w\" \"nodemon\"",
-    "debug": "concurrently \"mongod\" \"ng build -w\" \"node --inspect-brk src/server/server.js\"",
-    "prod": "concurrently \"mongod\" \"ng build -prod\" \"node src/server/server.js\"",
+    "debug": "concurrently \"mongod\" \"ng build -w\" \"nodemon --inspect-brk src/server/server.js\"",
+    "prod": "npm run build:server && concurrently \"mongod\" \"ng build -prod\" \"node dist/server/server.js\"",
+    "build:server": "tsc --project src/server/tsconfig.json",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json && tslint --project src/server/tsconfig.json -c ./tslint.json",
     "lint:fix:server": "tslint --fix --project src/server/tsconfig.json -c ./tslint.json",
     "deploy": "echo \"Are you sure you are on the 'deploy' branch (y/n)\" && read input_variable && if echo \"$input_variable\" | grep -iq \"^n\"; then return; fi && ng build -prod -aot &&  git add dist -f && git commit -am \"Prepairing for deployment, add dist folder\" && git push live deploy:master && git rm --cached dist -r && git commit -am \"Finishing deployment, remove dist folder\"",
