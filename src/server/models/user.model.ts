@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-const questionAnswerPairSchema = require('./questionAnswerPair.schema')
+const questionAnswerPairSchema = require('./question-answer-pair.schema')
 let uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new mongoose.Schema({

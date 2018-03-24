@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-import {handleMongoError} from './error/handleMongoError'
+import {handleMongoError} from './error/handle-mongo-error'
 
 export function connectToMongo() {
   if (process.env.NODE_ENV !== 'production') {
