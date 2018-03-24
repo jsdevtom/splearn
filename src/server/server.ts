@@ -1,24 +1,25 @@
-const express = require('express')
-const path = require('path')
-const morgan = require('morgan') // logger
-const bodyParser = require('body-parser')
-require('dotenv').config()
+import * as winston from 'winston'
+import mongoose from './imports'
+import * as compression from 'compression'
+import * as helmet from 'helmet'
+import { config } from 'dotenv'
+import * as bodyParser from 'body-parser'
+import * as express from 'express'
+import * as path from 'path'
 
-const apiRoutes = require('./routes/api.routes')
-const userRoutes = require('./routes/user.routes')
+config()
+
+import apiRoutes from './routes/api.routes'
+import userRoutes from './routes/user.routes'
 
 const app = express()
 app.set('port', (process.env.PORT || 3001))
-app.use(require('helmet')())
-app.use(require('compression')({ threshold: 0 }))
-app.use('/', express.static(path.join(__dirname, '/../../dist'), { maxAge: 86400000 }))
+app.use(helmet())
+app.use(compression({ threshold: 0 }))
+app.use('/', express.static(path.join(__dirname, '/../../dist/client'), { maxAge: 86400000 }))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(morgan('dev'))
-
-const { mongoose } = require('./imports')
 
 if (process.env.NODE_ENV !== 'production') {
   mongoose.connect('mongodb://localhost:27017/quiz')
@@ -27,6 +28,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const db = mongoose.connection
+
+winston.info('starting server')
 
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
@@ -38,7 +41,7 @@ db.once('open', function () {
 
   // all other routes are handled by Angular
   app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/../../dist/index.html'))
+    res.sendFile(path.join(__dirname, '/../../dist/client/index.html'))
   })
 
   app.listen(app.get('port'), function () {

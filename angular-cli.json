@@ -5,8 +5,8 @@
   },
   "apps": [
     {
-      "root": "src",
-      "outDir": "dist",
+      "root": "src/client",
+      "outDir": "dist/client",
       "assets": [
         "assets",
         "favicon.ico"
@@ -18,7 +18,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "../node_modules/purecss/build/pure-min.css",
+        "../../node_modules/purecss/build/pure-min.css",
         "styles.scss"
       ],
       "stylePreprocessorOptions": {

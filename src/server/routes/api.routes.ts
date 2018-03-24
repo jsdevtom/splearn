@@ -6,7 +6,7 @@ const User = require('../models/user.model')
 
 router.use('/', (req, res, next) => {
   jwt.verify(req.headers.jwt, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(401).json({title: 'Not authenticated', error: 'Not authenticated. Please log in.'})
+    if (err) return res.status(401).json({ title: 'Not authenticated', error: 'Not authenticated. Please log in.' })
     req.body.decodedUserID = jwt.decode(req.headers.jwt).userID
     next()
   })
@@ -18,7 +18,7 @@ router.get('/qapairs', function (req, res) {
     .then((foundUser) => {
       res.json(foundUser.qapairs)
     })
-    .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
+    .catch((err) => res.status(500).json({ title: 'An error occured', error: err }))
 })
 
 // create
@@ -39,7 +39,7 @@ router.post('/qapairs', function (req, res) {
     .then((result) => {
       res.status(201).json(newQaPair)
     })
-    .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
+    .catch((err) => res.status(500).json({ title: 'An error occured', error: err }))
 })
 
 // check if answer is correct then return `{ qaPairs, isCorrect }`
@@ -75,7 +75,7 @@ router.post('/qapairs/is_correct', function (req, res) {
       return onDeterminedIfCorrect(false)
     })
     .then((updatedUser) => res.status(200).json({ qaPairs: updatedUser.qapairs, isCorrect }))
-    .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
+    .catch((err) => res.status(500).json({ title: 'An error occured', error: err }))
 })
 
 // update by id
@@ -91,7 +91,7 @@ router.put('/qapairs/:id', function (req, res) {
       return foundUser.save()
     })
     .then((updatedUser) => res.status(200).json(qapair))
-    .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
+    .catch((err) => res.status(500).json({ title: 'An error occured', error: err }))
 })
 
 // delete by id
@@ -106,7 +106,7 @@ router.delete('/qapairs/:id', function (req, res) {
     .then((deletedObj) => {
       res.status(200).json(qapair)
     })
-    .catch((err) => res.status(500).json({title: 'An error occured', error: err}))
+    .catch((err) => res.status(500).json({ title: 'An error occured', error: err }))
 })
 
-module.exports = router
+export default router

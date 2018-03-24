@@ -1,7 +1,7 @@
-const { mongoose } = require('../imports')
+import mongoose from '../imports'
 const { nextAssessmentDate } = require('../helpers')
 
-const questionAnswerPairSchema = mongoose.Schema({
+const questionAnswerPairSchema = new mongoose.Schema({
   question: String,
   correctAnswers: [String],
   wrongAnswers: [String],

@@ -1,10 +1,10 @@
-const { mongoose } = require('../imports')
+import mongoose from '../imports'
 const questionAnswerPairSchema = require('./questionAnswerPair.schema')
-var uniqueValidator = require('mongoose-unique-validator')
+let uniqueValidator = require('mongoose-unique-validator')
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   firstName: String,
-  email: {type: String, required: true, unique: true},
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   qapairs: [questionAnswerPairSchema]
 })
