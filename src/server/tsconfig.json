@@ -10,7 +10,7 @@
     "moduleResolution": "node",
     "types": ["node"]
   },
-  "files": [
-    "./server.ts"
+  "include": [
+    "./**/*.ts"
   ]
 }

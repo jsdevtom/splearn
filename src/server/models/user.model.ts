@@ -1,4 +1,4 @@
-import mongoose from '../imports'
+import * as mongoose from 'mongoose'
 const questionAnswerPairSchema = require('./questionAnswerPair.schema')
 let uniqueValidator = require('mongoose-unique-validator')
 

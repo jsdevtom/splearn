@@ -1,4 +1,4 @@
-import mongoose from '../imports'
+import * as mongoose from 'mongoose'
 const { nextAssessmentDate } = require('../helpers')
 
 const questionAnswerPairSchema = new mongoose.Schema({

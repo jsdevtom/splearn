@@ -1,5 +1,5 @@
 import * as winston from 'winston'
-import mongoose from './imports'
+import * as mongoose from 'mongoose'
 import * as compression from 'compression'
 import * as helmet from 'helmet'
 import { config } from 'dotenv'
