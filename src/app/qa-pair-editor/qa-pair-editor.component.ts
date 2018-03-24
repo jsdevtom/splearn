@@ -14,7 +14,7 @@ export class QaPairEditorComponent implements OnInit {
   public curScrollTop = this.document.body.scrollTop
 
   @Output() toggleQAModal: EventEmitter<string> = new EventEmitter<string>()
-  @Input () currentQapair
+  @Input() currentQapair
 
   constructor (
     private fb: FormBuilder,
@@ -62,11 +62,11 @@ export class QaPairEditorComponent implements OnInit {
   }
 
   get correctAnswers (): FormArray {
-    return this.qaForm.get('correctAnswers')
+    return this.qaForm.get('correctAnswers') as FormArray
   }
 
   get wrongAnswers (): FormArray {
-    return this.qaForm.get('wrongAnswers')
+    return this.qaForm.get('wrongAnswers') as FormArray
   }
 
   get body () {
