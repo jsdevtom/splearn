@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 import { User } from "app/auth/user.model";
 import { ErrorsService } from "app/errors/errors.service";
@@ -13,18 +13,16 @@ export class AuthService {
   public firstName
 
   get requestOptions () {
-    return new RequestOptions(
-      {
-        headers: new Headers({'Content-Type': 'application/json', jwt: this.jwtInLS})
-      }
-    )
+    return ({
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', jwt: this.jwtInLS })
+    })
   }
   
   get jwtInLS () {
     return localStorage.getItem('jwt') || ''
   }
 
-  constructor(private http: Http, private errorsService: ErrorsService) { }
+  constructor(private http: HttpClient, private errorsService: ErrorsService) { }
 
   setCredentails (data) {
     localStorage.setItem('jwt', data.jwt)
@@ -35,7 +33,6 @@ export class AuthService {
   signUp (user: User) {
     console.log('signUp function called from auth.service.ts')
     const response = this.http.post(this.authUrl, user, this.requestOptions)
-      .map((response: Response) => response.json())
       .catch(
         (error: any) => {
           error = error.json()
@@ -49,7 +46,6 @@ export class AuthService {
 
   signIn (user: User) {
    return this.http.post(`${this.authUrl}/signin`, user, this.requestOptions)
-      .map((response: Response) => response.json())
       .catch(
         (error: any) => {
           error = error.json()
