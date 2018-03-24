@@ -35,7 +35,6 @@ export class AuthService {
     const response = this.http.post(this.authUrl, user, this.requestOptions)
       .catch(
         (error: any) => {
-          error = error.json()
           this.errorsService.handleError(error)
           throw Observable.throw(error)
         }
@@ -48,7 +47,6 @@ export class AuthService {
    return this.http.post(`${this.authUrl}/signin`, user, this.requestOptions)
       .catch(
         (error: any) => {
-          error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }

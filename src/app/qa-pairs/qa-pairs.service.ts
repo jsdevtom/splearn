@@ -37,7 +37,6 @@ export class QaPairsService {
       })
       .catch(
         (error: any) => {
-          error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
@@ -58,7 +57,6 @@ export class QaPairsService {
       })
       .catch(
         (error: any) => {
-          error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
@@ -79,7 +77,6 @@ export class QaPairsService {
           this.qapairsChanged.emit(this.qapairs)
         },
         (error: any): Observable<Error> => {
-          error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
@@ -95,7 +92,6 @@ export class QaPairsService {
           this.qapairsChanged.emit(this.qapairs)
         },
         (error: any): Observable<Error> => {
-          error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
@@ -111,7 +107,6 @@ export class QaPairsService {
           this.qapairsChanged.emit(this.qapairs)
         },
         (error: any): Observable<Error> => {
-          error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
@@ -127,7 +122,6 @@ export class QaPairsService {
       })
       .catch(
         (error: any) => {
-          error = error.json()
           this.errorsService.handleError(error)
           return Observable.throw(error)
         }
