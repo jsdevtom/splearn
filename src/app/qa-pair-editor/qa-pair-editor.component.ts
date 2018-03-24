@@ -1,7 +1,7 @@
-import { Component, OnInit, EventEmitter, Output, Input, Inject, AfterViewInit, QueryList } from '@angular/core';
-import { Validators, FormBuilder, FormArray, FormControl, FormGroup } from "@angular/forms";
-import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
-import { DOCUMENT } from '@angular/platform-browser';
+import { Component, OnInit, EventEmitter, Output, Input, Inject } from '@angular/core'
+import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
+import { QaPairsService } from 'app/qa-pairs/qa-pairs.service'
+import { DOCUMENT } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-qa-pair-editor',
@@ -16,7 +16,7 @@ export class QaPairEditorComponent implements OnInit {
   @Output() toggleQAModal: EventEmitter<string> = new EventEmitter<string>()
   @Input () currentQapair
 
-  constructor(
+  constructor (
     private fb: FormBuilder,
     private qaService: QaPairsService,
     @Inject(DOCUMENT) private document: any) {
@@ -29,9 +29,52 @@ export class QaPairEditorComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  ngOnInit () {
     this.isNew = !this.currentQapair
     this.initForm()
+  }
+
+  doNewQA () {
+    this.qaService.newQAPair(this.qaForm.value)
+
+    this.toggleQAModal.emit('toggleQAModal')
+    this.qaForm.reset()
+  }
+
+  updateQA () {
+    this.qaService.updateQAPair(this.currentQapair._id, this.qaForm.value)
+    this.toggleQAModal.emit('toggleQAModal')
+    this.qaForm.reset()
+  }
+
+  setAnswers (answers: string[], rightORwrongAns: 'correctAnswers' | 'wrongAnswers') {
+    const answerFormControls = answers.map(answer => this.fb.control(answer, Validators.required))
+    const answerFormArray = this.fb.array(answerFormControls)
+    this.qaForm.setControl(rightORwrongAns, answerFormArray)
+  }
+
+  addAnswer (rightORwrongAns: 'correctAnswers' | 'wrongAnswers') {
+    this[rightORwrongAns].push(this.fb.control('', Validators.required))
+  }
+
+  removeAnswer (index, rightORwrongAns: 'correctAnswers' | 'wrongAnswers') {
+    this[rightORwrongAns].removeAt(index)
+  }
+
+  get correctAnswers (): FormArray {
+    return this.qaForm.get('correctAnswers')
+  }
+
+  get wrongAnswers (): FormArray {
+    return this.qaForm.get('wrongAnswers')
+  }
+
+  get body () {
+    return this.document.body
+  }
+
+  toggleNewQAModal () {
+    this.toggleQAModal.emit()
   }
 
   private initForm () {
@@ -41,48 +84,5 @@ export class QaPairEditorComponent implements OnInit {
       this.qaForm.setControl('question', this.fb.control(this.currentQapair.question))
       this.qaForm.setControl('explanation', this.fb.control(this.currentQapair.explanation))
     }
-  }
-
-  doNewQA() {
-    this.qaService.newQAPair(this.qaForm.value)
-      
-    this.toggleQAModal.emit('toggleQAModal')
-    this.qaForm.reset()
-  }
-
-  updateQA() {
-    this.qaService.updateQAPair(this.currentQapair._id, this.qaForm.value)
-    this.toggleQAModal.emit('toggleQAModal')
-    this.qaForm.reset()
-  }
-
-  setAnswers(answers: string[], rightORwrongAns: 'correctAnswers' | 'wrongAnswers') {
-    const answerFormControls = answers.map(answer => this.fb.control(answer, Validators.required))
-    const answerFormArray = this.fb.array(answerFormControls)
-    this.qaForm.setControl(rightORwrongAns, answerFormArray)
-  }
-
-  addAnswer(rightORwrongAns: 'correctAnswers' | 'wrongAnswers') {
-    this[rightORwrongAns].push(this.fb.control('', Validators.required))
-  }
-
-  removeAnswer(index, rightORwrongAns: 'correctAnswers' | 'wrongAnswers') {
-    this[rightORwrongAns].removeAt(index)
-  }
-
-  get correctAnswers(): FormArray {
-    return this.qaForm.get('correctAnswers') as FormArray
-  }
-
-  get wrongAnswers(): FormArray {
-    return this.qaForm.get('wrongAnswers') as FormArray
-  }
-
-  get body () {
-    return this.document.body
-  }
-
-  toggleNewQAModal() {
-    this.toggleQAModal.emit()
   }
 }

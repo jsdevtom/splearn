@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import 'rxjs/add/operator/takeUntil';
-import { Subject } from 'rxjs/Subject';
-import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
-import { filterToBeAssessed } from "app/helpers";
-
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import 'rxjs/add/operator/takeUntil'
+import { Subject } from 'rxjs/Subject'
+import { QaPairsService } from 'app/qa-pairs/qa-pairs.service'
+import { filterToBeAssessed } from 'app/helpers'
 
 @Component({
   selector: 'app-qa-pairs',
@@ -11,16 +10,16 @@ import { filterToBeAssessed } from "app/helpers";
   styleUrls: ['./qa-pairs.component.scss']
 })
 export class QaPairsComponent implements OnDestroy, OnInit {
-  public ngUnsubscribe: Subject<void> = new Subject<void>();
+  public ngUnsubscribe: Subject<void> = new Subject<void>()
   public qapairs = []
   public qapairsToBeAssessed = []
   public currentQapair
   public isEditMode: Boolean
   public shouldShowNewQAModal: Boolean = false
 
-  constructor(private qaService: QaPairsService) { }
+  constructor (private qaService: QaPairsService) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.qaService.getQAPairs()
       .takeUntil(this.ngUnsubscribe)
       .subscribe((qapairsArr) => {
@@ -28,35 +27,35 @@ export class QaPairsComponent implements OnDestroy, OnInit {
         this.qapairsToBeAssessed = filterToBeAssessed(qapairsArr)
       })
     this.qaService.qapairsChanged
-      .takeUntil(this.ngUnsubscribe)      
+      .takeUntil(this.ngUnsubscribe)
       .subscribe((updatedQAPairs) => {
         this.qapairs = updatedQAPairs
         this.qapairsToBeAssessed = filterToBeAssessed(updatedQAPairs)
       })
   }
 
-  toggleNewQAModal(event?) {
-    //TODO: figure out how to use useCapture in order to stop the clicking on the child element (.newQAModal) from calling this function.
+  toggleNewQAModal (event?) {
+    // TODO: figure out how to use useCapture in order to stop the clicking on the child element (.newQAModal) from calling this function.
     // event.stopPropagation()
     this.shouldShowNewQAModal = !this.shouldShowNewQAModal
   }
 
-  onDelete(id) {
+  onDelete (id) {
     this.qaService.deleteQAPair(id)
   }
 
-  onEdit(currentQapair) {
+  onEdit (currentQapair) {
     this.currentQapair = currentQapair
     this.toggleNewQAModal()
   }
 
-  onNewQAPair() {
+  onNewQAPair () {
     this.currentQapair = null
     this.toggleNewQAModal()
   }
 
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  ngOnDestroy () {
+    this.ngUnsubscribe.next()
+    this.ngUnsubscribe.complete()
   }
 }

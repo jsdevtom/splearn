@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-not-found',
@@ -6,19 +6,13 @@ import { Component, OnInit } from '@angular/core';
     <h1>
       Page not found
     </h1>
-    <button 
-      type="button" 
-      class="pure-button pure-button-primary" 
+    <button
+      type="button"
+      class="pure-button pure-button-primary"
       [routerLink]="['/']">
       Main page</button>
   `,
   styles: []
 })
-export class NotFoundComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class NotFoundComponent {
 }

@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit, HostBinding, Renderer2, ElementRef } from '@angular/core';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/operator/filter';
-import { Subject } from 'rxjs/Subject';
-import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
-import { filterToBeAssessed } from "../helpers"
-import { AuthService } from "app/auth/auth.service";
-import { Router, NavigationEnd } from "@angular/router";
+import { Component, OnInit, Renderer2, ElementRef } from '@angular/core'
+import 'rxjs/add/operator/takeUntil'
+import 'rxjs/add/operator/filter'
+import { Subject } from 'rxjs/Subject'
+import { QaPairsService } from 'app/qa-pairs/qa-pairs.service'
+import { filterToBeAssessed } from '../helpers'
+import { AuthService } from 'app/auth/auth.service'
+import { Router, NavigationEnd } from '@angular/router'
 
 @Component({
   selector: 'app-navbar',
@@ -13,19 +13,19 @@ import { Router, NavigationEnd } from "@angular/router";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  private ngUnsubscribe: Subject<void> = new Subject<void>()
-  private numToBeAssessed: number
   public hoverBackgroundColor: boolean = true
   public svgFill: string
+  private ngUnsubscribe: Subject<void> = new Subject<void>()
+  private numToBeAssessed: number
 
-  constructor(
+  constructor (
     private qaService: QaPairsService,
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
     private elRef: ElementRef,
     private renderer: Renderer2) { }
 
-  ngOnInit() {
+  ngOnInit () {
     if (this.authService.isLoggedIn) {
       this.qaService.getQAPairstoBeAssessed()
         .takeUntil(this.ngUnsubscribe)
@@ -71,7 +71,7 @@ export class NavbarComponent implements OnInit {
     return this.authService.isLoggedIn
   }
 
-  ngOnDestroy() {
+  ngOnDestroy () {
     this.ngUnsubscribe.next()
     this.ngUnsubscribe.complete()
   }

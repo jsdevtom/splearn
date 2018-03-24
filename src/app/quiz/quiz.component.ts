@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import 'rxjs/add/operator/takeUntil';
-import { Subject } from 'rxjs/Subject';
-import { QaPairsService } from "app/qa-pairs/qa-pairs.service";
-import { FormBuilder, Validators } from "@angular/forms";
-import { filterToBeAssessed } from "app/helpers";
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import 'rxjs/add/operator/takeUntil'
+import { Subject } from 'rxjs/Subject'
+import { QaPairsService } from 'app/qa-pairs/qa-pairs.service'
+import { FormBuilder, Validators } from '@angular/forms'
+import { filterToBeAssessed } from 'app/helpers'
 
 @Component({
   selector: 'app-quiz',
@@ -11,7 +11,10 @@ import { filterToBeAssessed } from "app/helpers";
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnDestroy, OnInit {
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  public QAForm = this.fb.group({
+    answer: ['', Validators.required]
+  })
+  private ngUnsubscribe: Subject<void> = new Subject<void>()
   private questionIndex = 0
   private answeredQuestions = 0
   private correctAnswerCount = 0
@@ -21,13 +24,10 @@ export class QuizComponent implements OnDestroy, OnInit {
   private showFeedbackScreen: boolean = false
   private resultMessage: string
   private percentageCorrect: string
-  public QAForm = this.fb.group({
-    answer: ["", Validators.required]
-  })
 
-  constructor(private qaService: QaPairsService, public fb: FormBuilder) { }
+  constructor (private qaService: QaPairsService, public fb: FormBuilder) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.qaService.getQAPairs()
       .takeUntil(this.ngUnsubscribe)
       .subscribe((qapairs) => {
@@ -43,7 +43,7 @@ export class QuizComponent implements OnDestroy, OnInit {
       })
   }
 
-  onSubmitAnswer() {
+  onSubmitAnswer () {
     this.qaService.isCorrectAnswer(this.currentQAPair._id, this.QAForm.value.answer)
       .subscribe((data) => {
         this.showFeedbackScreen = true
@@ -55,12 +55,12 @@ export class QuizComponent implements OnDestroy, OnInit {
           this.resultMessage = `Not quite!`
         }
         this.percentageCorrect = ((this.correctAnswerCount / this.answeredQuestions) * 100).toFixed()
-        
+
       })
     this.QAForm.reset()
   }
 
-  hideFeedbackScreen() {
+  hideFeedbackScreen () {
     this.showFeedbackScreen = false
     this.questionIndex++
     if (!this.isFinished) {
@@ -68,7 +68,7 @@ export class QuizComponent implements OnDestroy, OnInit {
     }
   }
 
-  resetQuiz() {
+  resetQuiz () {
     this.ngOnInit()
   }
 
@@ -76,9 +76,9 @@ export class QuizComponent implements OnDestroy, OnInit {
     return !(this.answeredQuestions < this.numOfQuestionsInQuiz) && !this.showFeedbackScreen
   }
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  ngOnDestroy (): void {
+    this.ngUnsubscribe.next()
+    this.ngUnsubscribe.complete()
   }
 
 }

@@ -8,7 +8,7 @@
     "start": "concurrently \"mongod\" \"ng build -w\" \"nodemon src/server/server.js\"",
     "debug": "concurrently \"mongod\" \"ng build -w\" \"devtool src/server/server.js\"",
     "prod": "concurrently \"mongod\" \"ng build -prod\" \"node src/server/server.js\"",
-    "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
+    "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json",
     "deploy": "echo \"Are you sure you are on the 'deploy' branch (y/n)\" && read input_variable && if echo \"$input_variable\" | grep -iq \"^n\"; then return; fi && ng build -prod -aot &&  git add dist -f && git commit -am \"Prepairing for deployment, add dist folder\" && git push live deploy:master && git rm --cached dist -r && git commit -am \"Finishing deployment, remove dist folder\"",
     "test": "ng test",
     "test:server": "mocha",

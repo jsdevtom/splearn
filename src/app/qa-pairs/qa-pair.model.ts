@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import * as moment from 'moment'
 
 export interface IQAPair {
   question: string,
@@ -27,7 +27,7 @@ export default class QAPair implements IQAPair {
   public lastAssessed?: Date
   public toBeAssessedNext?: Date
 
-  constructor(obj: IQAPair) {
+  constructor (obj: IQAPair) {
     this.question = obj.question
     this.correctAnswers = obj.correctAnswers
     this.wrongAnswers = obj.wrongAnswers

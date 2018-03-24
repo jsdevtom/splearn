@@ -1,28 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 
-import { User } from "app/auth/user.model";
-import { ErrorsService } from "app/errors/errors.service";
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
+import { User } from 'app/auth/user.model'
+import { ErrorsService } from 'app/errors/errors.service'
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/observable/throw'
+import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class AuthService {
-  private authUrl = 'user'
   public firstName
+  private authUrl = 'user'
 
   get requestOptions () {
     return ({
       headers: new HttpHeaders({ 'Content-Type': 'application/json', jwt: this.jwtInLS })
     })
   }
-  
+
   get jwtInLS () {
     return localStorage.getItem('jwt') || ''
   }
 
-  constructor(private http: HttpClient, private errorsService: ErrorsService) { }
+  constructor (private http: HttpClient, private errorsService: ErrorsService) { }
 
   setCredentails (data) {
     localStorage.setItem('jwt', data.jwt)
@@ -40,7 +40,7 @@ export class AuthService {
           throw Observable.throw(error)
         }
       )
-    
+
     return response
   }
 

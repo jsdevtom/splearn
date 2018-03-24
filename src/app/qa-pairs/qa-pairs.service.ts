@@ -1,11 +1,11 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable, EventEmitter } from '@angular/core'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/catch'
+import 'rxjs/add/observable/throw'
 import QAPair, { IQAPair } from './qa-pair.model'
-import { ErrorsService } from "app/errors/errors.service";
+import { ErrorsService } from 'app/errors/errors.service'
 
 @Injectable()
 export class QaPairsService {
@@ -13,7 +13,7 @@ export class QaPairsService {
   public qapairsToBeAssessed = []
   public qapairsChanged: EventEmitter<any[]> = new EventEmitter()
   private qapairsUrl = 'api/qapairs'
-  
+
   get requestOptions () {
     return (
       {
@@ -21,14 +21,14 @@ export class QaPairsService {
       }
     )
   }
-  
+
   get jwtInLS () {
     return localStorage.getItem('jwt') || ''
   }
 
-  constructor(private http: HttpClient, private errorsService: ErrorsService) {}
+  constructor (private http: HttpClient, private errorsService: ErrorsService) {}
 
-  getQAPairs () {    
+  getQAPairs () {
     return this.http.get<Array<QAPair>>(this.qapairsUrl, this.requestOptions)
       .map((response) => {
         this.qapairs = response.map((qapair: IQAPair) => new QAPair(qapair))
