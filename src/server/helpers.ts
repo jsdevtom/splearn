@@ -1,27 +1,28 @@
 module.exports.levenshtein = (a, b) => {
-  a = a || ''
-  b = b || ''
-  if (a.length === 0) return b.length
-  if (b.length === 0) return a.length
+  let firstWord = a || ''
+  let secondWord = b || ''
+
+  if (firstWord.length === 0) return secondWord.length
+  if (secondWord.length === 0) return firstWord.length
   let tmp, i, j, prev, val, row
-  // swap to save some memory O(min(a,b)) instead of O(a)
-  if (a.length > b.length) {
-    tmp = a
-    a = b
-    b = tmp
+  // swap to save some memory O(min(firstWord,secondWord)) instead of O(firstWord)
+  if (firstWord.length > secondWord.length) {
+    tmp = firstWord
+    firstWord = secondWord
+    secondWord = tmp
   }
 
-  row = Array(a.length + 1)
+  row = Array(firstWord.length + 1)
   // init the row
-  for (i = 0; i <= a.length; i++) {
+  for (i = 0; i <= firstWord.length; i++) {
     row[i] = i
   }
 
   // fill in the rest
-  for (i = 1; i <= b.length; i++) {
+  for (i = 1; i <= secondWord.length; i++) {
     prev = i
-    for (j = 1; j <= a.length; j++) {
-      if (b[i - 1] === a[j - 1]) {
+    for (j = 1; j <= firstWord.length; j++) {
+      if (secondWord[i - 1] === firstWord[j - 1]) {
         val = row[j - 1] // match
       } else {
         val = Math.min(row[j - 1] + 1, // substitution
@@ -31,9 +32,9 @@ module.exports.levenshtein = (a, b) => {
       row[j - 1] = prev
       prev = val
     }
-    row[a.length] = prev
+    row[firstWord.length] = prev
   }
-  return row[a.length]
+  return row[firstWord.length]
 }
 
 module.exports.nextAssessmentDate = (numCorrectAttempts, lastAssessedDate) => {

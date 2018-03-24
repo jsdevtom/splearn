@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"mongod\" \"ng build -w\" \"nodemon\"",
-    "debug": "concurrently \"mongod\" \"ng build -w\" \"nodemon --inspect-brk src/server/server.js\"",
+    "debug": "concurrently \"mongod\" \"ng build -w\" \"nodemon --inspect-brk\"",
     "prod": "npm run build:server && concurrently \"mongod\" \"ng build -prod\" \"node dist/server/server.js\"",
     "build:server": "tsc --project src/server/tsconfig.json",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json && tslint --project src/server/tsconfig.json -c ./tslint.json",
@@ -34,6 +34,7 @@
     "compression": "^1.6.2",
     "concurrently": "^3.4.0",
     "core-js": "^2.4.1",
+    "date-fns": "^1.29.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "helmet": "^3.5.0",
